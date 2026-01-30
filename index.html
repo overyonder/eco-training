@@ -18,7 +18,9 @@
       --success: #10b981;
       --success-light: #d1fae5;
       --warning: #f59e0b;
+      --warning-light: #fef3c7;
       --danger: #ef4444;
+      --danger-light: #fee2e2;
       --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
     }
@@ -34,6 +36,10 @@
       --accent-light: #0c4a6e;
       --success: #34d399;
       --success-light: #064e3b;
+      --warning: #fbbf24;
+      --warning-light: #78350f;
+      --danger: #f87171;
+      --danger-light: #7f1d1d;
       --shadow: 0 1px 3px rgba(0,0,0,0.3);
       --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.3);
     }
@@ -47,332 +53,91 @@
       transition: background 0.3s, color 0.3s;
     }
     .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-
-    /* Header */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .header h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .header h1 { font-size: 1.75rem; font-weight: 700; background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .header-actions { display: flex; gap: 0.5rem; align-items: center; }
-
-    /* Theme toggle */
-    .theme-toggle {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 2rem;
-      padding: 0.5rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.875rem;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
+    .theme-toggle { background: var(--card); border: 1px solid var(--border); border-radius: 2rem; padding: 0.5rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--muted); transition: all 0.2s; }
     .theme-toggle:hover { border-color: var(--accent); color: var(--text); }
     .theme-toggle svg { width: 1.25rem; height: 1.25rem; }
-
     h2 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--text); font-weight: 600; }
     h3 { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 600; }
-
-    /* Tabs */
-    .tabs {
-      display: flex;
-      gap: 0.25rem;
-      margin-bottom: 1.5rem;
-      background: var(--bg-alt);
-      padding: 0.25rem;
-      border-radius: 0.75rem;
-      border: 1px solid var(--border);
-    }
-    .tab {
-      padding: 0.75rem 1.5rem;
-      background: transparent;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      color: var(--muted);
-      font-weight: 500;
-      transition: all 0.2s;
-      flex: 1;
-      text-align: center;
-    }
+    .tabs { display: flex; gap: 0.25rem; margin-bottom: 1.5rem; background: var(--bg-alt); padding: 0.25rem; border-radius: 0.75rem; border: 1px solid var(--border); }
+    .tab { padding: 0.75rem 1.5rem; background: transparent; border: none; border-radius: 0.5rem; cursor: pointer; color: var(--muted); font-weight: 500; transition: all 0.2s; flex: 1; text-align: center; }
     .tab:hover { color: var(--text); }
-    .tab.active {
-      background: var(--card);
-      color: var(--text);
-      box-shadow: var(--shadow);
-    }
+    .tab.active { background: var(--card); color: var(--text); box-shadow: var(--shadow); }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
-
-    /* Cards */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: var(--shadow);
-    }
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    /* Buttons */
-    button, .btn {
-      padding: 0.625rem 1.25rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+    button, .btn { padding: 0.625rem 1.25rem; border: none; border-radius: 0.5rem; cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .btn-primary { background: var(--accent); color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
     .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-    .btn-secondary {
-      background: var(--bg-alt);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
+    .btn-secondary { background: var(--bg-alt); color: var(--text); border: 1px solid var(--border); }
     .btn-secondary:hover { background: var(--border); }
-    .btn-ghost {
-      background: transparent;
-      color: var(--muted);
-      padding: 0.5rem;
-    }
+    .btn-ghost { background: transparent; color: var(--muted); padding: 0.5rem; }
     .btn-ghost:hover { color: var(--text); background: var(--bg-alt); }
-    .btn-download {
-      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-      color: white;
-    }
+    .btn-download { background: linear-gradient(135deg, var(--success) 0%, #059669 100%); color: white; }
     .btn-download:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
-
-    /* Forms */
-    input, select {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.5rem 0.75rem;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-light);
-    }
+    .btn-sm { padding: 0.375rem 0.75rem; font-size: 0.8rem; }
+    input, select { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; transition: border-color 0.2s, box-shadow 0.2s; }
+    input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
     label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 0.25rem; font-weight: 500; }
-
-    /* Species Grid */
-    .species-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .species-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      padding: 1rem;
-      position: relative;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
+    .species-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+    .species-card { background: var(--bg); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem; position: relative; transition: border-color 0.2s, box-shadow 0.2s; }
     .species-card:hover { border-color: var(--accent); }
-    .species-card .delete {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: transparent;
-      color: var(--muted);
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-    }
-    .species-card .delete:hover { color: var(--danger); background: #fef2f2; }
-    [data-theme="dark"] .species-card .delete:hover { background: #450a0a; }
+    .species-card .delete { position: absolute; top: 0.5rem; right: 0.5rem; background: transparent; color: var(--muted); padding: 0.25rem 0.5rem; border-radius: 0.25rem; }
+    .species-card .delete:hover { color: var(--danger); background: var(--danger-light); }
     .species-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
     .species-form .full { grid-column: 1 / -1; }
-
-    /* Collapsible */
     .collapsible { margin-bottom: 1rem; }
-    .collapsible-toggle {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-      color: var(--accent);
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 0.5rem 0;
-    }
+    .collapsible-toggle { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--accent); font-size: 0.875rem; font-weight: 500; padding: 0.5rem 0; }
     .collapsible-toggle:hover { text-decoration: underline; }
-    .collapsible-content {
-      display: none;
-      margin-top: 0.5rem;
-      padding: 1rem;
-      background: var(--bg);
-      border-radius: 0.5rem;
-      border: 1px solid var(--border);
-    }
+    .collapsible-content { display: none; margin-top: 0.5rem; padding: 1rem; background: var(--bg); border-radius: 0.5rem; border: 1px solid var(--border); }
     .collapsible.open .collapsible-content { display: block; }
     .collapsible-toggle::before { content: '▶'; font-size: 0.625rem; transition: transform 0.2s; }
     .collapsible.open .collapsible-toggle::before { transform: rotate(90deg); }
-
-    /* Two column layout */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
-
-    /* Steps */
-    .step {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
+    .step { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
     .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .step-num {
-      width: 2.5rem;
-      height: 2.5rem;
-      background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      flex-shrink: 0;
-      font-size: 1rem;
-    }
+    .step-num { width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; font-size: 1rem; }
     .step-content { flex: 1; }
     .step-title { font-weight: 600; margin-bottom: 0.5rem; font-size: 1rem; }
-
-    /* Example box */
-    .example {
-      background: var(--bg);
-      border-left: 3px solid var(--accent);
-      padding: 1rem;
-      margin-top: 0.75rem;
-      border-radius: 0 0.5rem 0.5rem 0;
-      font-size: 0.875rem;
-    }
-    .example-title {
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* Results */
+    .example { background: var(--bg); border-left: 3px solid var(--accent); padding: 1rem; margin-top: 0.75rem; border-radius: 0 0.5rem 0.5rem 0; font-size: 0.875rem; }
+    .example.warning { border-left-color: var(--warning); }
+    .example.danger { border-left-color: var(--danger); }
+    .example.success { border-left-color: var(--success); }
+    .example-title { color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .example.warning .example-title { color: var(--warning); }
+    .example.danger .example-title { color: var(--danger); }
+    .example.success .example-title { color: var(--success); }
     .results { margin-top: 1.5rem; }
-    .result-invalid { color: var(--danger); padding: 1rem; background: #fef2f2; border-radius: 0.5rem; }
-    [data-theme="dark"] .result-invalid { background: #450a0a; }
-
-    /* Habitat window tracker */
-    .habitat-tracker {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
+    .result-invalid { color: var(--danger); padding: 1rem; background: var(--danger-light); border-radius: 0.5rem; }
+    .habitat-tracker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-top: 1rem; }
     @media (max-width: 600px) { .habitat-tracker { grid-template-columns: repeat(2, 1fr); } }
-    .habitat-dim {
-      background: var(--bg);
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      text-align: center;
-      font-size: 0.75rem;
-      border: 1px solid var(--border);
-    }
-    .habitat-dim .value {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--success);
-      margin-top: 0.25rem;
-    }
-
-    /* Solution display */
-    .solution-species {
-      display: inline-block;
-      background: var(--success-light);
-      color: var(--success);
-      padding: 0.375rem 0.75rem;
-      border-radius: 2rem;
-      margin: 0.25rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      border: 1px solid var(--success);
-    }
-
-    /* Scratch pad */
-    .scratch-pad {
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 0.8rem;
-      background: var(--bg-alt);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      white-space: pre;
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      line-height: 1.5;
-    }
+    .habitat-dim { background: var(--bg); padding: 0.75rem; border-radius: 0.5rem; text-align: center; font-size: 0.75rem; border: 1px solid var(--border); }
+    .habitat-dim .value { font-size: 1rem; font-weight: 700; color: var(--success); margin-top: 0.25rem; }
+    .solution-species { display: inline-block; background: var(--success-light); color: var(--success); padding: 0.375rem 0.75rem; border-radius: 2rem; margin: 0.25rem; font-size: 0.8rem; font-weight: 500; border: 1px solid var(--success); }
+    .solution-species.dead { background: var(--danger-light); color: var(--danger); border-color: var(--danger); text-decoration: line-through; }
+    .scratch-pad { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; background: var(--bg-alt); padding: 1rem; border-radius: 0.5rem; white-space: pre; overflow-x: auto; border: 1px solid var(--border); line-height: 1.5; }
     [data-theme="dark"] .scratch-pad { background: #0f172a; }
-
-    /* Quick add */
     .quick-add { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-
-    /* Alert banner */
-    .alert {
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-    }
-    .alert-info {
-      background: var(--accent-light);
-      border: 1px solid var(--accent);
-      color: var(--accent);
-    }
-    [data-theme="dark"] .alert-info { color: var(--text); }
+    .alert { padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.875rem; }
+    .alert-warning { background: var(--warning-light); border: 1px solid var(--warning); }
+    .alert-info { background: var(--accent-light); border: 1px solid var(--accent); }
     .alert svg { flex-shrink: 0; margin-top: 0.125rem; }
-
-    /* Solution card */
-    .solution-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-    }
+    .solution-card { background: var(--bg); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem; }
+    .rule-box { background: var(--bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0; }
+    .rule-box h4 { font-size: 0.875rem; margin-bottom: 0.5rem; color: var(--accent); }
+    .rule-box ol, .rule-box ul { margin-left: 1.25rem; font-size: 0.875rem; }
+    .rule-box li { margin-bottom: 0.25rem; }
+    .badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+    .badge-warning { background: var(--warning-light); color: var(--warning); }
+    .badge-info { background: var(--accent-light); color: var(--accent); }
+    .sim-step { padding: 0.5rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.8rem; font-family: monospace; }
+    .sim-step.eat { background: var(--accent-light); }
+    .sim-step.survive { background: var(--success-light); }
+    .sim-step.die { background: var(--danger-light); }
   </style>
 </head>
 <body>
@@ -382,13 +147,18 @@
       <div class="header-actions">
         <a href="template.pdf" download class="btn btn-download">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          Download Template
+          Template
         </a>
         <button class="theme-toggle" onclick="toggleTheme()">
           <svg class="sun" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
           <svg class="moon" style="display:none" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
       </div>
+    </div>
+
+    <div class="alert alert-warning">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      <div><strong>2026 Update:</strong> The Ecosystem game is being phased out. If your test is ~70 min, you'll get Redrock + Sea Wolf only. If ~110 min, you may still see Ecosystem. This trainer remains useful for practice and the 3-game format.</div>
     </div>
 
     <div class="tabs">
@@ -400,28 +170,50 @@
     <div id="heuristics" class="tab-content active">
       <div class="card">
         <div class="card-header">
-          <h2>Solving the Ecosystem Game In-Person</h2>
+          <h2>Game Rules &amp; Mechanics</h2>
+          <span class="badge badge-info">35 min time limit</span>
+        </div>
+
+        <p style="margin-bottom: 1rem;">Select <strong>8 species</strong> from 39 cards to build a sustainable ecosystem, then place it in a suitable habitat location.</p>
+
+        <div class="rule-box">
+          <h4>Eating Simulation (Critical!)</h4>
+          <p style="margin-bottom: 0.5rem;">The game runs a <strong>sequential simulation</strong> to check if your ecosystem survives:</p>
+          <ol>
+            <li>Species with <strong>highest Calories Provided</strong> eats first</li>
+            <li>It eats from its food source with highest <em>current</em> Calories Provided</li>
+            <li>Food source's Calories Provided <strong>decreases permanently</strong> by eater's Calories Needed</li>
+            <li>If still hungry, eater moves to next food source</li>
+            <li>Repeat for species with next-highest Calories Provided</li>
+          </ol>
+        </div>
+
+        <div class="rule-box">
+          <h4>Survival Conditions</h4>
+          <p>A species survives if and only if:</p>
+          <ul>
+            <li>Its <strong>Calories Needed</strong> are fully met (reduced to 0)</li>
+            <li>AND its <strong>Calories Provided remains > 0</strong> (not completely eaten)</li>
+          </ul>
+        </div>
+
+        <div class="rule-box">
+          <h4>Terrain: Only 2 Conditions Matter</h4>
+          <p>Despite cards showing 4+ conditions, typically only <strong>Depth/Elevation</strong> and <strong>Temperature</strong> matter. Others (humidity, wind, etc.) are noise with ranges wide enough to always match.</p>
         </div>
 
         <div class="collapsible" id="why-collapsible">
           <div class="collapsible-toggle" onclick="toggleCollapsible('why-collapsible')">
-            Why can't I just solve it algorithmically?
+            Why can't I solve this mathematically?
           </div>
           <div class="collapsible-content">
-            <p style="margin-bottom: 1rem;">The ecosystem game is a <strong>constraint satisfaction problem</strong> combining:</p>
+            <p style="margin-bottom: 1rem;">The ecosystem game combines multiple NP-hard problems:</p>
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-              <li><strong>Interval intersection</strong> — all species must share overlapping habitat ranges</li>
-              <li><strong>Graph reachability</strong> — every consumer needs a food source in your selection</li>
-              <li><strong>Network flow</strong> — calories provided must exceed calories consumed</li>
-              <li><strong>Combinatorial selection</strong> — choosing 8 from 39 cards</li>
+              <li><strong>Clique finding</strong> — 8 mutually compatible species from 39</li>
+              <li><strong>Sequential simulation</strong> — eating order depends on current state</li>
+              <li><strong>Resource flow</strong> — calories deplete as simulation runs</li>
             </ul>
-            <p style="margin-bottom: 1rem;">There's no matrix transformation or closed-form solution. The selection problem is NP-hard (finding an 8-clique in a compatibility graph). Even simplified, you'd need to:</p>
-            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-              <li>Track a 39x39 compatibility matrix (1,521 cells)</li>
-              <li>Check food chain validity via adjacency matrix powers</li>
-              <li>Solve a linear program for caloric flow</li>
-            </ul>
-            <p><strong>None of this is feasible by hand in 60 minutes.</strong> The game is designed for structured elimination, not algebraic solution.</p>
+            <p>No matrix transformation or closed-form solution exists. The structured heuristic approach below is how humans solve it efficiently.</p>
           </div>
         </div>
       </div>
@@ -433,28 +225,28 @@
           <div class="step">
             <div class="step-num">1</div>
             <div class="step-content">
-              <div class="step-title">Scan & Identify Producers</div>
-              <p>Find 2-3 producers (calories needed = 0) with the <strong>widest environmental ranges</strong> and <strong>highest calories provided</strong>. These anchor your ecosystem.</p>
+              <div class="step-title">Identify High-Value Producers</div>
+              <p>Find 2-3 producers (cal needed = 0) with <strong>highest Calories Provided</strong> and <strong>widest depth/temp ranges</strong>. These anchor your ecosystem and feed everything else.</p>
             </div>
           </div>
 
           <div class="step">
             <div class="step-num">2</div>
             <div class="step-content">
-              <div class="step-title">Pick Anchor & Set Habitat Window</div>
-              <p>Choose your primary producer. Write down its ranges — this is your initial <strong>habitat window</strong>. All future picks must fit within it.</p>
+              <div class="step-title">Set Your Habitat Window</div>
+              <p>Pick your anchor producer. Write down its <strong>Depth</strong> and <strong>Temp</strong> ranges. All future species must fit within this window.</p>
             </div>
           </div>
 
           <div class="step">
             <div class="step-num">3</div>
             <div class="step-content">
-              <div class="step-title">Add Species Bottom-Up</div>
-              <p>For each new species, ask three questions <strong>in order</strong>:</p>
-              <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                <li>Does it fit the habitat window? (If no, skip)</li>
-                <li>Can it eat something already selected? (If no, skip)</li>
-                <li>Does it narrow the window dangerously? (Update bounds)</li>
+              <div class="step-title">Build Bottom-Up with 3 Checks</div>
+              <p>For each candidate species, ask <strong>in order</strong>:</p>
+              <ol style="margin-left: 1.25rem; margin-top: 0.5rem;">
+                <li><strong>Habitat fit?</strong> Does it overlap your window?</li>
+                <li><strong>Food available?</strong> Can it eat something selected?</li>
+                <li><strong>Calorie safe?</strong> Will its food source survive being eaten?</li>
               </ol>
             </div>
           </div>
@@ -462,77 +254,105 @@
           <div class="step">
             <div class="step-num">4</div>
             <div class="step-content">
-              <div class="step-title">Calorie Check</div>
-              <p>Sum up: <strong>Total Provided</strong> (all species) vs <strong>Total Needed</strong> (consumers only). Provided should be >= 1.5x needed for safety margin.</p>
+              <div class="step-title">Simulate the Eating Order</div>
+              <p>Sort your 8 species by <strong>Calories Provided (highest first)</strong>. Walk through who eats whom. Check that no species gets fully consumed before it can eat.</p>
             </div>
           </div>
 
           <div class="step">
             <div class="step-num">5</div>
             <div class="step-content">
-              <div class="step-title">Verify & Select Habitat</div>
-              <p>Confirm every consumer can point to its food source. Pick habitat values <strong>in the middle</strong> of your final window ranges.</p>
+              <div class="step-title">Handle Dead Ends</div>
+              <p>If simulation fails (species starves or gets consumed), <strong>identify the bottleneck</strong>:</p>
+              <ul style="margin-left: 1.25rem; margin-top: 0.5rem;">
+                <li>Producer exhausted? Add another or swap for higher-calorie one</li>
+                <li>Predator too hungry? Swap for one with lower Calories Needed</li>
+                <li>Eaten before eating? Swap for species with higher Calories Provided</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <div class="step-title">Place Habitat</div>
+              <p>Pick <strong>middle values</strong> of your final depth and temp window. Don't pick edges.</p>
             </div>
           </div>
         </div>
 
         <div class="card">
-          <h2>Worked Example</h2>
+          <h2>Worked Example (With Dead End)</h2>
 
           <div class="example">
-            <div class="example-title">Step 1: Identify Producers</div>
-            Scanning cards, I find:<br>
-            <strong>Brain Coral</strong>: 5000 cal, depth 0-40m, temp 20-35C<br>
-            <strong>Seaweed</strong>: 1800 cal, depth 0-30m, temp 18-32C<br>
-            <strong>Green Coral</strong>: 2000 cal, depth 5-25m, temp 22-30C<br><br>
-            Brain Coral has widest range + highest calories = anchor
+            <div class="example-title">Step 1-2: Anchor Selection</div>
+            Best producers found:<br>
+            <strong>Giant Kelp</strong>: 4000 cal, depth 5-30m, temp 12-20C<br>
+            <strong>Sea Grass</strong>: 2500 cal, depth 0-25m, temp 15-24C<br><br>
+            <div class="scratch-pad">WINDOW: Depth 5-25m, Temp 15-20C
+SELECTED: Giant Kelp (4000), Sea Grass (2500)
+TOTAL PROVIDED: 6500</div>
           </div>
 
           <div class="example">
-            <div class="example-title">Step 2: Initial Habitat Window</div>
-            <div class="scratch-pad">HABITAT WINDOW:
-  Depth: [ 0 ] - [ 40 ] m
-  Temp:  [ 20 ] - [ 35 ] C
-  Salt:  [ 32 ] - [ 42 ] ppt
+            <div class="example-title">Step 3: Adding Consumers</div>
+            Adding species that fit window and have food:<br>
+            <strong>Sea Urchin</strong>: needs 800, provides 600, eats Kelp/Grass<br>
+            <strong>Small Fish</strong>: needs 400, provides 300, eats Grass<br>
+            <strong>Crab</strong>: needs 500, provides 400, eats Kelp<br>
+            <strong>Octopus</strong>: needs 700, provides 500, eats Crab/Urchin<br>
+            <strong>Sea Bass</strong>: needs 600, provides 450, eats Small Fish<br>
+            <strong>Shark</strong>: needs 900, provides 700, eats Bass/Octopus
+          </div>
 
-SELECTED: Brain Coral
-CALORIES: P=5000 / N=0</div>
+          <div class="example danger">
+            <div class="example-title">Step 4: Simulation Reveals Problem</div>
+            Eating order (by Calories Provided):<br>
+            <div class="scratch-pad">1. Giant Kelp (4000) - producer, doesn't eat
+2. Sea Grass (2500) - producer, doesn't eat
+3. Shark (700) eats Sea Bass (450)
+   Bass: 450 - 900 = -450 <span style="color:var(--danger)">DIES (consumed)</span>
+4. Sea Urchin (600) eats Giant Kelp
+   Kelp: 4000 - 800 = 3200 ✓
+5. Octopus (500) eats Sea Urchin (600)
+   Urchin: 600 - 700 = -100 <span style="color:var(--danger)">DIES</span>
+...
+<span style="color:var(--danger)">FAILURE: Sea Bass consumed before it could eat</span></div>
+          </div>
+
+          <div class="example warning">
+            <div class="example-title">Step 5: Identify Bottleneck</div>
+            <strong>Problem:</strong> Shark (needs 900) eats Sea Bass (provides 450) completely.<br>
+            <strong>Root cause:</strong> Shark's Calories Needed > Bass's Calories Provided<br><br>
+            <strong>Options:</strong><br>
+            A) Replace Shark with smaller predator (needs less)<br>
+            B) Replace Sea Bass with larger prey (provides more)<br>
+            C) Add second prey option for Shark
+          </div>
+
+          <div class="example success">
+            <div class="example-title">Step 5: Recovery</div>
+            Swap Shark for <strong>Barracuda</strong>: needs 500, provides 400, eats Bass/Fish<br><br>
+            <div class="scratch-pad">New simulation:
+1. Giant Kelp (4000) - doesn't eat
+2. Sea Grass (2500) - doesn't eat
+3. Sea Urchin (600) eats Kelp: 4000-800=3200 ✓
+4. Octopus (500) eats Urchin: 600-700=-100...
+
+Still fails! Octopus needs 700 but Urchin only has 600.
+
+<span style="color:var(--warning)">Swap Octopus for Lobster (needs 400)</span>
+
+Final working chain:
+Kelp(4000) -> Urchin(600) -> Lobster survives ✓
+Grass(2500) -> Small Fish(300) -> Barracuda survives ✓
+All species end with Provided > 0 ✓</div>
           </div>
 
           <div class="example">
-            <div class="example-title">Step 3: Adding Yellow Fish</div>
-            Yellow Fish: depth 0-30m, temp 18-34C, needs 10 cal<br>
-            Eats: Brain Coral (already selected)<br><br>
-            <strong>Update window:</strong>
-            <div class="scratch-pad">HABITAT WINDOW:
-  Depth: [ 0 ] - [ 30 ] m  &lt;- narrowed
-  Temp:  [ 20 ] - [ 34 ] C &lt;- narrowed
-
-SELECTED: Brain Coral, Yellow Fish
-CALORIES: P=7500 / N=240</div>
-          </div>
-
-          <div class="example">
-            <div class="example-title">Step 4: Final Check</div>
-            After selecting 8 species:<br>
-            <div class="scratch-pad">FINAL WINDOW:
-  Depth: [ 5 ] - [ 25 ] m
-  Temp:  [ 22 ] - [ 30 ] C
-  Salt:  [ 32 ] - [ 40 ] ppt
-
-FOOD CHAINS:
-  Shark -> Big Eyed Fish -> Yellow Fish -> Brain Coral
-  Turtle -> Seaweed
-
-CALORIES: P=12,300 / N=7,840  (ratio 1.57x)</div>
-          </div>
-
-          <div class="example">
-            <div class="example-title">Step 5: Habitat Selection</div>
-            Pick middle values:<br>
-            Depth: <strong>15m</strong> (middle of 5-25)<br>
-            Temp: <strong>26C</strong> (middle of 22-30)<br>
-            Salt: <strong>36 ppt</strong> (middle of 32-40)
+            <div class="example-title">Step 6: Place Habitat</div>
+            Final window: Depth 5-25m, Temp 15-20C<br>
+            <strong>Place at:</strong> Depth 15m, Temp 17C (middle values)
           </div>
         </div>
       </div>
@@ -545,27 +365,57 @@ CALORIES: P=12,300 / N=7,840  (ratio 1.57x)</div>
             Download PDF
           </a>
         </div>
-        <p style="margin-bottom: 1rem; color: var(--muted);">Print this template or copy onto paper before starting:</p>
-        <div class="scratch-pad">HABITAT WINDOW (update as you add species):
-  Depth:   [    ] - [    ] m
-  Temp:    [    ] - [    ] C
-  Salt:    [    ] - [    ] ppt
-  Current: [    ] - [    ] cfs
+        <p style="margin-bottom: 1rem; color: var(--muted);">Print this or copy to paper. Track eating order by sorting species by Provided (highest first).</p>
+        <div class="scratch-pad">HABITAT WINDOW:
+  Depth: [    ] - [    ] m
+  Temp:  [    ] - [    ] C
 
-SELECTED (8 slots):
-  1. _____________ (producer, provides ____)
-  2. _____________ (producer, provides ____)
-  3. _____________ (eats: ____, needs ____)
-  4. _____________ (eats: ____, needs ____)
-  5. _____________ (eats: ____, needs ____)
-  6. _____________ (eats: ____, needs ____)
-  7. _____________ (eats: ____, needs ____)
-  8. _____________ (eats: ____, needs ____)
+SELECTED (8 slots) - sorted by Calories Provided:
+  #  Name            Provided  Needed  Eats
+  1. _______________ ________ (producer)
+  2. _______________ ________ (producer)
+  3. _______________ ________ _______ _______________
+  4. _______________ ________ _______ _______________
+  5. _______________ ________ _______ _______________
+  6. _______________ ________ _______ _______________
+  7. _______________ ________ _______ _______________
+  8. _______________ ________ _______ _______________
 
-CALORIE TOTALS:
-  Provided: _______ (sum of all provided x population)
-  Needed:   _______ (sum of consumer needed x population)
-  Ratio:    _______ (target >= 1.5)</div>
+EATING SIMULATION (highest Provided eats first):
+  Species         Eats        Food's Provided After
+  _____________ -> __________ : _____ - _____ = _____
+  _____________ -> __________ : _____ - _____ = _____
+  _____________ -> __________ : _____ - _____ = _____
+
+SURVIVAL CHECK:
+  [ ] All species Needed met?
+  [ ] All species Provided > 0?</div>
+      </div>
+
+      <div class="card">
+        <h2>Common Dead Ends &amp; Fixes</h2>
+        <div class="two-col" style="gap: 1rem;">
+          <div class="rule-box">
+            <h4>Apex Predator Too Hungry</h4>
+            <p style="font-size: 0.875rem;"><strong>Symptom:</strong> Top predator consumes prey entirely<br>
+            <strong>Fix:</strong> Swap for predator with lower Calories Needed, or add second prey option</p>
+          </div>
+          <div class="rule-box">
+            <h4>Producer Exhausted</h4>
+            <p style="font-size: 0.875rem;"><strong>Symptom:</strong> Producer reaches 0 before all herbivores eat<br>
+            <strong>Fix:</strong> Add second producer, or swap herbivore for one with lower Needed</p>
+          </div>
+          <div class="rule-box">
+            <h4>Mid-Chain Collapse</h4>
+            <p style="font-size: 0.875rem;"><strong>Symptom:</strong> Species eaten before it can eat<br>
+            <strong>Fix:</strong> Species needs higher Calories Provided (so it eats earlier in order)</p>
+          </div>
+          <div class="rule-box">
+            <h4>Habitat Window Too Narrow</h4>
+            <p style="font-size: 0.875rem;"><strong>Symptom:</strong> Can't find 8 species that overlap<br>
+            <strong>Fix:</strong> Start over with different anchor producer with wider ranges</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -573,7 +423,7 @@ CALORIE TOTALS:
     <div id="algorithm" class="tab-content">
       <div class="card">
         <h2>Species Data Entry</h2>
-        <p style="color: var(--muted); margin-bottom: 1rem;">Enter species from the game. The solver will find valid 8-species ecosystems.</p>
+        <p style="color: var(--muted); margin-bottom: 1rem;">Enter species from the game. The solver runs the actual eating simulation to validate solutions.</p>
 
         <div class="quick-add">
           <button class="btn btn-primary" onclick="addSpecies()">
@@ -601,21 +451,21 @@ CALORIE TOTALS:
       </div>
 
       <div class="card">
-        <h2>Algorithm Details</h2>
-        <div class="collapsible" id="algo-collapsible">
+        <h2>Simulation Details</h2>
+        <div class="collapsible open" id="algo-collapsible">
           <div class="collapsible-toggle" onclick="toggleCollapsible('algo-collapsible')">
-            How does the solver work?
+            How does the eating simulation work?
           </div>
           <div class="collapsible-content">
-            <p style="margin-bottom: 1rem;">The solver uses <strong>constraint propagation with backtracking</strong>:</p>
+            <p style="margin-bottom: 1rem;">The solver implements the <strong>exact game mechanics</strong>:</p>
             <ol style="margin-left: 1.5rem;">
-              <li style="margin-bottom: 0.5rem;"><strong>Precompute compatibility</strong> — Build a graph where edges connect species with overlapping habitat ranges</li>
-              <li style="margin-bottom: 0.5rem;"><strong>Start with producers</strong> — They have no caloric needs and anchor the food chain</li>
-              <li style="margin-bottom: 0.5rem;"><strong>Greedy selection with pruning</strong> — Add species that fit the current habitat window and have valid food sources</li>
-              <li style="margin-bottom: 0.5rem;"><strong>Caloric validation</strong> — Check that total provided >= total needed</li>
-              <li style="margin-bottom: 0.5rem;"><strong>Backtrack on failure</strong> — If stuck, undo last choice and try alternatives</li>
+              <li style="margin-bottom: 0.5rem;"><strong>Sort by Calories Provided</strong> (highest first) to determine eating order</li>
+              <li style="margin-bottom: 0.5rem;"><strong>Each consumer eats</strong> from its highest-calorie food source</li>
+              <li style="margin-bottom: 0.5rem;"><strong>Deduct calories</strong> from food source permanently</li>
+              <li style="margin-bottom: 0.5rem;"><strong>Check survival</strong>: Needed met AND Provided > 0</li>
+              <li style="margin-bottom: 0.5rem;"><strong>Backtrack</strong> if any species dies, try alternatives</li>
             </ol>
-            <p style="margin-top: 1rem; color: var(--muted);">For 39 species, this typically finds solutions in under a second. The search space is pruned aggressively by habitat compatibility.</p>
+            <p style="margin-top: 1rem; color: var(--muted);">Solutions show the full simulation trace so you can see exactly how calories flow through the ecosystem.</p>
           </div>
         </div>
       </div>
@@ -626,7 +476,6 @@ CALORIE TOTALS:
     let species = [];
     let speciesId = 0;
 
-    // Theme
     function toggleTheme() {
       const html = document.documentElement;
       const isDark = html.getAttribute('data-theme') === 'dark';
@@ -639,12 +488,10 @@ CALORIE TOTALS:
       document.querySelector('.sun').style.display = isDark ? 'none' : 'block';
       document.querySelector('.moon').style.display = isDark ? 'block' : 'none';
     }
-    // Initialize theme
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon();
 
-    // Tab switching
     document.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -660,17 +507,7 @@ CALORIE TOTALS:
 
     function addSpecies(data = null) {
       const id = speciesId++;
-      const s = data || {
-        name: '',
-        type: 'wildlife',
-        depthMin: 0, depthMax: 50,
-        tempMin: 15, tempMax: 35,
-        saltMin: 30, saltMax: 45,
-        caloriesNeeded: 0,
-        caloriesProvided: 1000,
-        population: 10,
-        foodSources: ''
-      };
+      const s = data || { name: '', type: 'wildlife', depthMin: 0, depthMax: 50, tempMin: 15, tempMax: 35, caloriesNeeded: 0, caloriesProvided: 1000, foodSources: '' };
       s.id = id;
       species.push(s);
       renderSpecies();
@@ -685,7 +522,7 @@ CALORIE TOTALS:
     function updateSpecies(id, field, value) {
       const s = species.find(s => s.id === id);
       if (s) {
-        if (['depthMin','depthMax','tempMin','tempMax','saltMin','saltMax','caloriesNeeded','caloriesProvided','population'].includes(field)) {
+        if (['depthMin','depthMax','tempMin','tempMax','caloriesNeeded','caloriesProvided'].includes(field)) {
           s[field] = parseFloat(value) || 0;
         } else {
           s[field] = value;
@@ -696,7 +533,7 @@ CALORIE TOTALS:
     function renderSpecies() {
       const grid = document.getElementById('species-grid');
       grid.innerHTML = species.map(s => `
-        <div class="species-card" id="species-${s.id}">
+        <div class="species-card">
           <button class="delete btn btn-ghost" onclick="removeSpecies(${s.id})">✕</button>
           <div class="species-form">
             <div class="full">
@@ -707,12 +544,12 @@ CALORIE TOTALS:
               <label>Type</label>
               <select onchange="updateSpecies(${s.id}, 'type', this.value)" style="width: 100%">
                 <option value="producer" ${s.type === 'producer' ? 'selected' : ''}>Producer</option>
-                <option value="wildlife" ${s.type === 'wildlife' ? 'selected' : ''}>Wildlife</option>
+                <option value="wildlife" ${s.type === 'wildlife' ? 'selected' : ''}>Consumer</option>
               </select>
             </div>
             <div>
-              <label>Population</label>
-              <input type="number" value="${s.population}" onchange="updateSpecies(${s.id}, 'population', this.value)" style="width: 100%">
+              <label>Cal. Provided</label>
+              <input type="number" value="${s.caloriesProvided}" onchange="updateSpecies(${s.id}, 'caloriesProvided', this.value)" style="width: 100%">
             </div>
             <div>
               <label>Depth Min (m)</label>
@@ -731,24 +568,12 @@ CALORIE TOTALS:
               <input type="number" value="${s.tempMax}" onchange="updateSpecies(${s.id}, 'tempMax', this.value)" style="width: 100%">
             </div>
             <div>
-              <label>Salt Min (ppt)</label>
-              <input type="number" value="${s.saltMin}" onchange="updateSpecies(${s.id}, 'saltMin', this.value)" style="width: 100%">
-            </div>
-            <div>
-              <label>Salt Max (ppt)</label>
-              <input type="number" value="${s.saltMax}" onchange="updateSpecies(${s.id}, 'saltMax', this.value)" style="width: 100%">
-            </div>
-            <div>
               <label>Cal. Needed</label>
               <input type="number" value="${s.caloriesNeeded}" onchange="updateSpecies(${s.id}, 'caloriesNeeded', this.value)" style="width: 100%">
             </div>
-            <div>
-              <label>Cal. Provided</label>
-              <input type="number" value="${s.caloriesProvided}" onchange="updateSpecies(${s.id}, 'caloriesProvided', this.value)" style="width: 100%">
-            </div>
             <div class="full">
-              <label>Food Sources (comma-separated)</label>
-              <input type="text" value="${s.foodSources}" onchange="updateSpecies(${s.id}, 'foodSources', this.value)" style="width: 100%" placeholder="e.g., Brain Coral, Seaweed">
+              <label>Food Sources (comma-separated names)</label>
+              <input type="text" value="${s.foodSources || ''}" onchange="updateSpecies(${s.id}, 'foodSources', this.value)" style="width: 100%" placeholder="e.g., Kelp, Sea Grass">
             </div>
           </div>
         </div>
@@ -757,112 +582,149 @@ CALORIE TOTALS:
     }
 
     function loadExample() {
-      species = [];
-      speciesId = 0;
-      const examples = [
-        { name: 'Brain Coral', type: 'producer', depthMin: 0, depthMax: 40, tempMin: 20, tempMax: 35, saltMin: 32, saltMax: 42, caloriesNeeded: 0, caloriesProvided: 5000, population: 1, foodSources: '' },
-        { name: 'Green Coral', type: 'producer', depthMin: 5, depthMax: 25, tempMin: 22, tempMax: 30, saltMin: 32, saltMax: 40, caloriesNeeded: 0, caloriesProvided: 2000, population: 1, foodSources: '' },
-        { name: 'Seaweed', type: 'producer', depthMin: 0, depthMax: 30, tempMin: 18, tempMax: 32, saltMin: 30, saltMax: 42, caloriesNeeded: 0, caloriesProvided: 1800, population: 1, foodSources: '' },
-        { name: 'Yellow Fish', type: 'wildlife', depthMin: 0, depthMax: 30, tempMin: 18, tempMax: 34, saltMin: 32, saltMax: 42, caloriesNeeded: 10, caloriesProvided: 5, population: 24, foodSources: 'Brain Coral, Green Coral, Seaweed' },
-        { name: 'Big Eyed Fish', type: 'wildlife', depthMin: 0, depthMax: 30, tempMin: 18, tempMax: 34, saltMin: 32, saltMax: 42, caloriesNeeded: 20, caloriesProvided: 10, population: 8, foodSources: 'Yellow Fish' },
-        { name: 'Turtle', type: 'wildlife', depthMin: 5, depthMax: 35, tempMin: 20, tempMax: 32, saltMin: 32, saltMax: 42, caloriesNeeded: 15, caloriesProvided: 8, population: 12, foodSources: 'Seaweed' },
-        { name: 'Shark', type: 'wildlife', depthMin: 10, depthMax: 50, tempMin: 18, tempMax: 30, saltMin: 32, saltMax: 42, caloriesNeeded: 25, caloriesProvided: 20, population: 4, foodSources: 'Big Eyed Fish, Turtle' },
-        { name: 'Bigeye Tuna', type: 'wildlife', depthMin: 5, depthMax: 40, tempMin: 18, tempMax: 34, saltMin: 32, saltMax: 42, caloriesNeeded: 20, caloriesProvided: 15, population: 6, foodSources: 'Big Eyed Fish, Yellow Fish' },
-        { name: 'Crab', type: 'wildlife', depthMin: 0, depthMax: 20, tempMin: 15, tempMax: 28, saltMin: 30, saltMax: 40, caloriesNeeded: 8, caloriesProvided: 4, population: 20, foodSources: 'Seaweed, Green Coral' },
-        { name: 'Violet Fish', type: 'wildlife', depthMin: 10, depthMax: 45, tempMin: 20, tempMax: 32, saltMin: 34, saltMax: 44, caloriesNeeded: 12, caloriesProvided: 6, population: 15, foodSources: 'Brain Coral' },
+      species = []; speciesId = 0;
+      const ex = [
+        { name: 'Giant Kelp', type: 'producer', depthMin: 5, depthMax: 30, tempMin: 12, tempMax: 20, caloriesNeeded: 0, caloriesProvided: 4000, foodSources: '' },
+        { name: 'Sea Grass', type: 'producer', depthMin: 0, depthMax: 25, tempMin: 15, tempMax: 24, caloriesNeeded: 0, caloriesProvided: 2500, foodSources: '' },
+        { name: 'Coral', type: 'producer', depthMin: 5, depthMax: 20, tempMin: 18, tempMax: 26, caloriesNeeded: 0, caloriesProvided: 1800, foodSources: '' },
+        { name: 'Sea Urchin', type: 'wildlife', depthMin: 5, depthMax: 25, tempMin: 14, tempMax: 22, caloriesNeeded: 800, caloriesProvided: 600, foodSources: 'Giant Kelp, Sea Grass' },
+        { name: 'Small Fish', type: 'wildlife', depthMin: 0, depthMax: 30, tempMin: 12, tempMax: 24, caloriesNeeded: 400, caloriesProvided: 300, foodSources: 'Sea Grass, Coral' },
+        { name: 'Crab', type: 'wildlife', depthMin: 5, depthMax: 20, tempMin: 14, tempMax: 20, caloriesNeeded: 500, caloriesProvided: 400, foodSources: 'Giant Kelp, Coral' },
+        { name: 'Lobster', type: 'wildlife', depthMin: 10, depthMax: 30, tempMin: 12, tempMax: 18, caloriesNeeded: 400, caloriesProvided: 350, foodSources: 'Sea Urchin, Small Fish' },
+        { name: 'Octopus', type: 'wildlife', depthMin: 5, depthMax: 35, tempMin: 14, tempMax: 22, caloriesNeeded: 600, caloriesProvided: 500, foodSources: 'Crab, Lobster' },
+        { name: 'Sea Bass', type: 'wildlife', depthMin: 10, depthMax: 40, tempMin: 12, tempMax: 20, caloriesNeeded: 550, caloriesProvided: 450, foodSources: 'Small Fish, Crab' },
+        { name: 'Barracuda', type: 'wildlife', depthMin: 5, depthMax: 30, tempMin: 16, tempMax: 24, caloriesNeeded: 700, caloriesProvided: 550, foodSources: 'Sea Bass, Small Fish' },
+        { name: 'Shark', type: 'wildlife', depthMin: 10, depthMax: 50, tempMin: 14, tempMax: 22, caloriesNeeded: 900, caloriesProvided: 700, foodSources: 'Sea Bass, Octopus, Barracuda' },
       ];
-      examples.forEach(e => addSpecies(e));
+      ex.forEach(e => addSpecies(e));
     }
 
     function clearAll() {
-      species = [];
-      speciesId = 0;
+      species = []; speciesId = 0;
       renderSpecies();
       document.getElementById('results').style.display = 'none';
     }
 
-    function getHabitatWindow(selected) {
+    function getHabitatWindow(sel) {
       return {
-        depthMin: Math.max(...selected.map(s => s.depthMin)),
-        depthMax: Math.min(...selected.map(s => s.depthMax)),
-        tempMin: Math.max(...selected.map(s => s.tempMin)),
-        tempMax: Math.min(...selected.map(s => s.tempMax)),
-        saltMin: Math.max(...selected.map(s => s.saltMin)),
-        saltMax: Math.min(...selected.map(s => s.saltMax)),
+        depthMin: Math.max(...sel.map(s => s.depthMin)),
+        depthMax: Math.min(...sel.map(s => s.depthMax)),
+        tempMin: Math.max(...sel.map(s => s.tempMin)),
+        tempMax: Math.min(...sel.map(s => s.tempMax)),
       };
     }
 
     function isWindowValid(w) {
-      return w.depthMin <= w.depthMax && w.tempMin <= w.tempMax && w.saltMin <= w.saltMax;
+      return w.depthMin <= w.depthMax && w.tempMin <= w.tempMax;
     }
 
-    function canEat(consumer, selected) {
+    function canEat(consumer, sel) {
       if (consumer.type === 'producer') return true;
-      const foods = consumer.foodSources.split(',').map(f => f.trim().toLowerCase());
-      return selected.some(s => foods.includes(s.name.toLowerCase()));
+      const foods = (consumer.foodSources || '').split(',').map(f => f.trim().toLowerCase()).filter(f => f);
+      return sel.some(s => foods.includes(s.name.toLowerCase()));
     }
 
-    function checkCalories(selected) {
-      const provided = selected.reduce((sum, s) => sum + s.caloriesProvided * s.population, 0);
-      const needed = selected.filter(s => s.type !== 'producer')
-                            .reduce((sum, s) => sum + s.caloriesNeeded * s.population, 0);
-      return { provided, needed, valid: provided >= needed, ratio: needed > 0 ? provided / needed : Infinity };
+    // Actual eating simulation
+    function simulateEcosystem(sel) {
+      const state = sel.map(s => ({ ...s, currentProvided: s.caloriesProvided, caloriesMet: s.type === 'producer' }));
+      const log = [];
+
+      // Sort by calories provided (highest first)
+      const order = [...state].sort((a, b) => b.currentProvided - a.currentProvided);
+
+      for (const eater of order) {
+        if (eater.type === 'producer') {
+          log.push({ type: 'skip', species: eater.name, msg: 'Producer - does not eat' });
+          continue;
+        }
+
+        let needed = eater.caloriesNeeded;
+        const foods = (eater.foodSources || '').split(',').map(f => f.trim().toLowerCase()).filter(f => f);
+
+        // Find food sources in selection, sorted by current provided
+        const availableFood = state
+          .filter(s => foods.includes(s.name.toLowerCase()) && s.currentProvided > 0)
+          .sort((a, b) => b.currentProvided - a.currentProvided);
+
+        for (const food of availableFood) {
+          if (needed <= 0) break;
+          const eaten = Math.min(needed, food.currentProvided);
+          food.currentProvided -= eaten;
+          needed -= eaten;
+          log.push({
+            type: 'eat',
+            species: eater.name,
+            food: food.name,
+            amount: eaten,
+            foodRemaining: food.currentProvided
+          });
+        }
+
+        eater.caloriesMet = needed <= 0;
+        if (!eater.caloriesMet) {
+          log.push({ type: 'starve', species: eater.name, shortfall: needed });
+        }
+      }
+
+      // Check survival
+      const survivors = [];
+      const dead = [];
+      for (const s of state) {
+        if (s.caloriesMet && s.currentProvided > 0) {
+          survivors.push({ name: s.name, remaining: s.currentProvided });
+          log.push({ type: 'survive', species: s.name, remaining: s.currentProvided });
+        } else {
+          dead.push({ name: s.name, reason: !s.caloriesMet ? 'starved' : 'consumed' });
+          log.push({ type: 'die', species: s.name, reason: !s.caloriesMet ? 'starved' : 'consumed' });
+        }
+      }
+
+      return { success: dead.length === 0, survivors, dead, log, state };
     }
 
     function solve() {
       if (species.length < 8) {
-        alert('Need at least 8 species to find a solution');
+        alert('Need at least 8 species');
         return;
       }
 
       const solutions = [];
-      const producers = species.filter(s => s.type === 'producer');
-      const consumers = species.filter(s => s.type !== 'producer');
+      const prods = species.filter(s => s.type === 'producer');
+      const cons = species.filter(s => s.type !== 'producer');
 
-      function search(selected, remaining) {
-        if (solutions.length >= 10) return;
+      function search(sel, rem) {
+        if (solutions.length >= 5) return;
 
-        if (selected.length === 8) {
-          const cal = checkCalories(selected);
-          if (cal.valid) {
-            solutions.push({
-              species: [...selected],
-              habitat: getHabitatWindow(selected),
-              calories: cal
-            });
+        if (sel.length === 8) {
+          const sim = simulateEcosystem(sel);
+          if (sim.success) {
+            solutions.push({ species: [...sel], habitat: getHabitatWindow(sel), simulation: sim });
           }
           return;
         }
 
-        for (let i = 0; i < remaining.length; i++) {
-          const candidate = remaining[i];
-          const newSelected = [...selected, candidate];
-          const window = getHabitatWindow(newSelected);
-
-          if (!isWindowValid(window)) continue;
-          if (!canEat(candidate, newSelected)) continue;
-
-          search(newSelected, remaining.slice(i + 1));
+        for (let i = 0; i < rem.length; i++) {
+          const c = rem[i];
+          const newSel = [...sel, c];
+          const w = getHabitatWindow(newSel);
+          if (!isWindowValid(w)) continue;
+          if (!canEat(c, newSel)) continue;
+          search(newSel, rem.slice(i + 1));
         }
       }
 
-      const sorted = [...producers, ...consumers].sort((a, b) => {
-        if (a.type === 'producer' && b.type !== 'producer') return -1;
-        if (a.type !== 'producer' && b.type === 'producer') return 1;
-        return b.caloriesProvided - a.caloriesProvided;
-      });
-
+      const sorted = [...prods, ...cons].sort((a, b) => b.caloriesProvided - a.caloriesProvided);
       search([], sorted);
       displayResults(solutions);
     }
 
     function displayResults(solutions) {
-      const resultsDiv = document.getElementById('results');
+      const div = document.getElementById('results');
       const content = document.getElementById('results-content');
-      resultsDiv.style.display = 'block';
+      div.style.display = 'block';
 
-      if (solutions.length === 0) {
-        content.innerHTML = '<p class="result-invalid">No valid ecosystems found. Try adjusting species ranges or food sources.</p>';
+      if (!solutions.length) {
+        content.innerHTML = '<p class="result-invalid">No valid ecosystems found. Check food sources and calorie values.</p>';
         return;
       }
 
@@ -873,26 +735,22 @@ CALORIE TOTALS:
             ${sol.species.map(s => `<span class="solution-species">${s.name}</span>`).join('')}
           </div>
           <div class="habitat-tracker">
-            <div class="habitat-dim">
-              <div>Depth</div>
-              <div class="value">${sol.habitat.depthMin}-${sol.habitat.depthMax}m</div>
-            </div>
-            <div class="habitat-dim">
-              <div>Temp</div>
-              <div class="value">${sol.habitat.tempMin}-${sol.habitat.tempMax}C</div>
-            </div>
-            <div class="habitat-dim">
-              <div>Salinity</div>
-              <div class="value">${sol.habitat.saltMin}-${sol.habitat.saltMax}ppt</div>
-            </div>
-            <div class="habitat-dim">
-              <div>Calories</div>
-              <div class="value">${sol.calories.ratio.toFixed(1)}x</div>
-            </div>
+            <div class="habitat-dim"><div>Depth</div><div class="value">${sol.habitat.depthMin}-${sol.habitat.depthMax}m</div></div>
+            <div class="habitat-dim"><div>Temp</div><div class="value">${sol.habitat.tempMin}-${sol.habitat.tempMax}C</div></div>
           </div>
-          <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--muted);">
-            Provided: ${sol.calories.provided} / Needed: ${sol.calories.needed}
-          </p>
+          <details style="margin-top: 1rem;">
+            <summary style="cursor: pointer; color: var(--accent); font-weight: 500;">Show simulation trace</summary>
+            <div style="margin-top: 0.5rem;">
+              ${sol.simulation.log.map(l => {
+                if (l.type === 'skip') return `<div class="sim-step">${l.species}: ${l.msg}</div>`;
+                if (l.type === 'eat') return `<div class="sim-step eat">${l.species} eats ${l.food} (-${l.amount}) → ${l.food} has ${l.foodRemaining} left</div>`;
+                if (l.type === 'survive') return `<div class="sim-step survive">${l.species} survives (${l.remaining} remaining)</div>`;
+                if (l.type === 'die') return `<div class="sim-step die">${l.species} dies (${l.reason})</div>`;
+                if (l.type === 'starve') return `<div class="sim-step die">${l.species} cannot meet needs (short ${l.shortfall})</div>`;
+                return '';
+              }).join('')}
+            </div>
+          </details>
         </div>
       `).join('');
     }

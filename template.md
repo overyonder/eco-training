@@ -1,84 +1,82 @@
 ---
 title: Ecosystem Game Scratch Pad
+subtitle: McKinsey Solve - 35 min time limit
 geometry: margin=1.5cm
-fontsize: 11pt
+fontsize: 10pt
+---
+
+# Key Rules
+
+**Eating Order:** Species with highest Calories Provided eats first. Food source's Provided decreases permanently.
+
+**Survival:** Calories Needed must be met AND Calories Provided must remain > 0.
+
+**Terrain:** Only Depth/Elevation and Temperature typically matter.
+
 ---
 
 # Habitat Window
 
-Update these bounds as you add each species. Valid ecosystem requires all ranges to overlap.
-
-| Dimension | Min | Max | Notes |
-|-----------|-----|-----|-------|
-| Depth (m) | | | |
-| Temp (°C) | | | |
-| Salinity (ppt) | | | |
-| Current (cfs) | | | |
+| Dimension | Min | Max |
+|-----------|-----|-----|
+| Depth (m) | | |
+| Temp (C) | | |
 
 ---
 
-# Selected Species (8 slots)
+# Selected Species (sorted by Calories Provided - highest first)
 
-| # | Species Name | Type | Provides | Needs | Eats |
-|---|--------------|------|----------|-------|------|
-| 1 | | Producer | | — | |
-| 2 | | Producer | | — | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
-| 6 | | | | | |
-| 7 | | | | | |
-| 8 | | | | | |
-
----
-
-# Calorie Totals
-
-| Metric | Value |
-|--------|-------|
-| **Total Provided** (sum of provided x population) | |
-| **Total Needed** (consumers only: needed x population) | |
-| **Ratio** (target >= 1.5) | |
+| # | Species Name | Provided | Needed | Eats |
+|---|--------------|----------|--------|------|
+| 1 | | | (producer) | |
+| 2 | | | (producer) | |
+| 3 | | | | |
+| 4 | | | | |
+| 5 | | | | |
+| 6 | | | | |
+| 7 | | | | |
+| 8 | | | | |
 
 ---
 
-# Food Chain Verification
+# Eating Simulation
 
-For each consumer, confirm at least one food source is selected:
+Walk through in order of Calories Provided (highest first):
 
-- [ ] Species 3 eats: _____________ (in selection? Y/N)
-- [ ] Species 4 eats: _____________ (in selection? Y/N)
-- [ ] Species 5 eats: _____________ (in selection? Y/N)
-- [ ] Species 6 eats: _____________ (in selection? Y/N)
-- [ ] Species 7 eats: _____________ (in selection? Y/N)
-- [ ] Species 8 eats: _____________ (in selection? Y/N)
-
----
-
-# Final Habitat Selection
-
-Pick values near the **middle** of each range:
-
-| Dimension | Your Value |
-|-----------|------------|
-| Depth | m |
-| Temperature | °C |
-| Salinity | ppt |
-| Current | cfs |
+| Eater | Eats | Food's Provided - Needed = Remaining |
+|-------|------|--------------------------------------|
+| | | - = |
+| | | - = |
+| | | - = |
+| | | - = |
+| | | - = |
+| | | - = |
 
 ---
 
-# Quick Reference
+# Survival Check
 
-**Three questions for each species (in order):**
+- [ ] All consumers' Needed met?
+- [ ] All species' Provided > 0?
 
-1. Does it fit the habitat window?
-2. Can it eat something already selected?
-3. Does it narrow the window too much?
+---
 
-**Common mistakes:**
+# Dead End Recovery
 
-- Picking apex predator first (narrow ranges)
-- Adding carnivore before its prey
-- Forgetting to update habitat window
-- Not tracking calorie totals
+If simulation fails:
+
+| Problem | Fix |
+|---------|-----|
+| Predator consumes prey entirely | Swap for predator with lower Needed |
+| Producer exhausted | Add second producer or swap herbivore |
+| Species eaten before it eats | Needs higher Provided (eats earlier) |
+| No 8 species fit window | Try different anchor producer |
+
+---
+
+# Final Habitat Placement
+
+Pick **middle** of each range:
+
+- Depth: _____ m
+- Temp: _____ C
