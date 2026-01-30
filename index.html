@@ -138,6 +138,8 @@
     .sim-step.eat { background: var(--accent-light); }
     .sim-step.survive { background: var(--success-light); }
     .sim-step.die { background: var(--danger-light); }
+    .scenario-btn { flex: 1; justify-content: center; }
+    .scenario-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
   </style>
 </head>
 <body>
@@ -156,9 +158,20 @@
       </div>
     </div>
 
-    <div class="alert alert-warning">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-      <div><strong>2026 Update:</strong> The Ecosystem game is being phased out. If your test is ~70 min, you'll get Redrock + Sea Wolf only. If ~110 min, you may still see Ecosystem. This trainer remains useful for practice and the 3-game format.</div>
+    <div class="alert alert-info">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <div><strong>Scenarios:</strong> The Ecosystem game has two variants — <strong>Coral Reef</strong> (Depth + Temperature) and <strong>Mountain/Red Rock</strong> (Elevation + Temperature). Select your scenario below. The core mechanics are identical.</div>
+    </div>
+
+    <div class="scenario-toggle" style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+      <button class="btn btn-secondary scenario-btn active" data-scenario="reef" onclick="setScenario('reef')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        Coral Reef
+      </button>
+      <button class="btn btn-secondary scenario-btn" data-scenario="mountain" onclick="setScenario('mountain')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+        Mountain / Red Rock
+      </button>
     </div>
 
     <div class="tabs">
@@ -199,7 +212,7 @@
 
         <div class="rule-box">
           <h4>Terrain: Only 2 Conditions Matter</h4>
-          <p>Despite cards showing 4+ conditions, typically only <strong>Depth/Elevation</strong> and <strong>Temperature</strong> matter. Others (humidity, wind, etc.) are noise with ranges wide enough to always match.</p>
+          <p>Despite cards showing 4+ conditions, typically only <strong class="terrain-label">Depth</strong> and <strong>Temperature</strong> matter. Others (salinity, humidity, wind, etc.) are noise with ranges wide enough to always match.</p>
         </div>
 
         <div class="collapsible" id="why-collapsible">
@@ -234,7 +247,7 @@
             <div class="step-num">2</div>
             <div class="step-content">
               <div class="step-title">Set Your Habitat Window</div>
-              <p>Pick your anchor producer. Write down its <strong>Depth</strong> and <strong>Temp</strong> ranges. All future species must fit within this window.</p>
+              <p>Pick your anchor producer. Write down its <strong class="terrain-label">Depth</strong> and <strong>Temp</strong> ranges. All future species must fit within this window.</p>
             </div>
           </div>
 
@@ -366,8 +379,8 @@ All species end with Provided > 0 ✓</div>
           </a>
         </div>
         <p style="margin-bottom: 1rem; color: var(--muted);">Print this or copy to paper. Track eating order by sorting species by Provided (highest first).</p>
-        <div class="scratch-pad">HABITAT WINDOW:
-  Depth: [    ] - [    ] m
+        <div class="scratch-pad"><span class="terrain-label">HABITAT WINDOW:
+  Depth: [    ] - [    ] m</span>
   Temp:  [    ] - [    ] C
 
 SELECTED (8 slots) - sorted by Calories Provided:
@@ -552,11 +565,11 @@ SURVIVAL CHECK:
               <input type="number" value="${s.caloriesProvided}" onchange="updateSpecies(${s.id}, 'caloriesProvided', this.value)" style="width: 100%">
             </div>
             <div>
-              <label>Depth Min (m)</label>
+              <label class="terrain-label-min">Depth Min (m)</label>
               <input type="number" value="${s.depthMin}" onchange="updateSpecies(${s.id}, 'depthMin', this.value)" style="width: 100%">
             </div>
             <div>
-              <label>Depth Max (m)</label>
+              <label class="terrain-label-max">Depth Max (m)</label>
               <input type="number" value="${s.depthMax}" onchange="updateSpecies(${s.id}, 'depthMax', this.value)" style="width: 100%">
             </div>
             <div>
@@ -583,7 +596,8 @@ SURVIVAL CHECK:
 
     function loadExample() {
       species = []; speciesId = 0;
-      const ex = [
+
+      const reefEx = [
         { name: 'Giant Kelp', type: 'producer', depthMin: 5, depthMax: 30, tempMin: 12, tempMax: 20, caloriesNeeded: 0, caloriesProvided: 4000, foodSources: '' },
         { name: 'Sea Grass', type: 'producer', depthMin: 0, depthMax: 25, tempMin: 15, tempMax: 24, caloriesNeeded: 0, caloriesProvided: 2500, foodSources: '' },
         { name: 'Coral', type: 'producer', depthMin: 5, depthMax: 20, tempMin: 18, tempMax: 26, caloriesNeeded: 0, caloriesProvided: 1800, foodSources: '' },
@@ -596,6 +610,21 @@ SURVIVAL CHECK:
         { name: 'Barracuda', type: 'wildlife', depthMin: 5, depthMax: 30, tempMin: 16, tempMax: 24, caloriesNeeded: 700, caloriesProvided: 550, foodSources: 'Sea Bass, Small Fish' },
         { name: 'Shark', type: 'wildlife', depthMin: 10, depthMax: 50, tempMin: 14, tempMax: 22, caloriesNeeded: 900, caloriesProvided: 700, foodSources: 'Sea Bass, Octopus, Barracuda' },
       ];
+
+      const mountainEx = [
+        { name: 'Alpine Grass', type: 'producer', depthMin: 1500, depthMax: 3000, tempMin: 5, tempMax: 18, caloriesNeeded: 0, caloriesProvided: 3500, foodSources: '' },
+        { name: 'Mountain Shrub', type: 'producer', depthMin: 1200, depthMax: 2500, tempMin: 8, tempMax: 20, caloriesNeeded: 0, caloriesProvided: 2800, foodSources: '' },
+        { name: 'Pine Tree', type: 'producer', depthMin: 1000, depthMax: 2200, tempMin: 5, tempMax: 15, caloriesNeeded: 0, caloriesProvided: 2000, foodSources: '' },
+        { name: 'Mountain Hare', type: 'wildlife', depthMin: 1500, depthMax: 2800, tempMin: 4, tempMax: 16, caloriesNeeded: 600, caloriesProvided: 500, foodSources: 'Alpine Grass, Mountain Shrub' },
+        { name: 'Marmot', type: 'wildlife', depthMin: 1800, depthMax: 3000, tempMin: 2, tempMax: 14, caloriesNeeded: 500, caloriesProvided: 400, foodSources: 'Alpine Grass' },
+        { name: 'Mountain Goat', type: 'wildlife', depthMin: 2000, depthMax: 3500, tempMin: 0, tempMax: 12, caloriesNeeded: 800, caloriesProvided: 650, foodSources: 'Alpine Grass, Mountain Shrub' },
+        { name: 'Red Fox', type: 'wildlife', depthMin: 1200, depthMax: 2600, tempMin: 5, tempMax: 18, caloriesNeeded: 550, caloriesProvided: 450, foodSources: 'Mountain Hare, Marmot' },
+        { name: 'Golden Eagle', type: 'wildlife', depthMin: 1500, depthMax: 3500, tempMin: 2, tempMax: 16, caloriesNeeded: 700, caloriesProvided: 550, foodSources: 'Mountain Hare, Marmot' },
+        { name: 'Snow Leopard', type: 'wildlife', depthMin: 2000, depthMax: 3500, tempMin: -5, tempMax: 10, caloriesNeeded: 850, caloriesProvided: 700, foodSources: 'Mountain Goat, Mountain Hare' },
+        { name: 'Wolf', type: 'wildlife', depthMin: 1500, depthMax: 3000, tempMin: 0, tempMax: 15, caloriesNeeded: 900, caloriesProvided: 750, foodSources: 'Mountain Goat, Red Fox, Marmot' },
+      ];
+
+      const ex = currentScenario === 'reef' ? reefEx : mountainEx;
       ex.forEach(e => addSpecies(e));
     }
 
@@ -735,7 +764,7 @@ SURVIVAL CHECK:
             ${sol.species.map(s => `<span class="solution-species">${s.name}</span>`).join('')}
           </div>
           <div class="habitat-tracker">
-            <div class="habitat-dim"><div>Depth</div><div class="value">${sol.habitat.depthMin}-${sol.habitat.depthMax}m</div></div>
+            <div class="habitat-dim"><div class="terrain-label">Depth</div><div class="value">${sol.habitat.depthMin}-${sol.habitat.depthMax}<span class="terrain-unit">m</span></div></div>
             <div class="habitat-dim"><div>Temp</div><div class="value">${sol.habitat.tempMin}-${sol.habitat.tempMax}C</div></div>
           </div>
           <details style="margin-top: 1rem;">
@@ -753,6 +782,50 @@ SURVIVAL CHECK:
           </details>
         </div>
       `).join('');
+    }
+
+    // Scenario switching
+    let currentScenario = 'reef';
+
+    function setScenario(scenario) {
+      currentScenario = scenario;
+      document.querySelectorAll('.scenario-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.scenario === scenario);
+      });
+
+      const isReef = scenario === 'reef';
+      const terrainName = isReef ? 'Depth' : 'Elevation';
+      const terrainUnit = isReef ? 'm' : 'm';
+
+      // Update all terrain labels
+      document.querySelectorAll('.terrain-label').forEach(el => {
+        if (el.tagName === 'SPAN' && el.closest('.scratch-pad')) {
+          el.innerHTML = `HABITAT WINDOW:\n  ${terrainName}: [    ] - [    ] ${terrainUnit}`;
+        } else {
+          el.textContent = terrainName;
+        }
+      });
+
+      document.querySelectorAll('.terrain-label-min').forEach(el => {
+        el.textContent = `${terrainName} Min (${terrainUnit})`;
+      });
+
+      document.querySelectorAll('.terrain-label-max').forEach(el => {
+        el.textContent = `${terrainName} Max (${terrainUnit})`;
+      });
+
+      document.querySelectorAll('.terrain-unit').forEach(el => {
+        el.textContent = terrainUnit;
+      });
+
+      // Update example if needed
+      updateExampleForScenario(scenario);
+    }
+
+    function updateExampleForScenario(scenario) {
+      const exampleAnchors = document.querySelectorAll('.example');
+      // Examples are scenario-specific but the mechanics remain the same
+      // The current example uses reef terminology which works for both
     }
 
     renderSpecies();
