@@ -217,24 +217,59 @@
 
         <div class="collapsible" id="why-collapsible">
           <div class="collapsible-toggle" onclick="toggleCollapsible('why-collapsible')">
-            Why can't I solve this by hand?
+            Why no analytical solution?
           </div>
           <div class="collapsible-content">
-            <p style="margin-bottom: 1rem;"><strong>A computer solves this trivially</strong> — brute force C(39,8) = 77 million combinations, each verifiable in microseconds. The Digital Solver tab does exactly this.</p>
-            <p style="margin-bottom: 1rem;"><strong>A human cannot</strong> because in 35 minutes you can't:</p>
+            <p style="margin-bottom: 1rem;"><strong>No matrix/algebraic solution exists</strong> because the eating simulation is <em>sequential and state-mutating</em>:</p>
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-              <li>Enumerate millions of combinations</li>
-              <li>Run the eating simulation mentally for many candidates</li>
-              <li>Track calorie depletion across multiple food chains</li>
+              <li>Eating order is determined by Calories Provided (highest first)</li>
+              <li>Each species eating <strong>mutates the state</strong> — food source's Provided decreases</li>
+              <li>The next species eats from the <em>current</em> state, not the original</li>
+              <li>Survival depends on execution order, not just totals</li>
             </ul>
-            <p>The heuristic approach below lets you prune the search space to a manageable size by making smart choices early (high-calorie producers, compatible ranges) and backtracking only when necessary.</p>
+            <p style="margin-bottom: 1rem;">This isn't reducible to Ax=b or network flow. It requires simulation.</p>
+            <p style="margin-bottom: 1rem;"><strong>A computer solves via brute force</strong> — enumerate C(39,8) = 77 million combinations, simulate each in microseconds. The Digital Solver tab does exactly this.</p>
+            <p><strong>A human uses heuristics</strong> — prune the search space by making smart early choices (high-calorie producers, compatible ranges) and backtrack only when simulation fails.</p>
           </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Example Species (Coral Reef)</h2>
+        <p style="margin-bottom: 1rem; color: var(--muted);">This example dataset is also loaded in the Digital Solver tab. We'll walk through solving it below.</p>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border); text-align: left;">
+                <th style="padding: 0.5rem;">Species</th>
+                <th style="padding: 0.5rem;">Type</th>
+                <th style="padding: 0.5rem;">Provided</th>
+                <th style="padding: 0.5rem;">Needed</th>
+                <th style="padding: 0.5rem;">Depth (m)</th>
+                <th style="padding: 0.5rem;">Temp (C)</th>
+                <th style="padding: 0.5rem;">Eats</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Giant Kelp</td><td>Producer</td><td>4000</td><td>—</td><td>5-30</td><td>12-20</td><td>—</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Sea Grass</td><td>Producer</td><td>2500</td><td>—</td><td>0-25</td><td>15-24</td><td>—</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Coral</td><td>Producer</td><td>1800</td><td>—</td><td>5-20</td><td>18-26</td><td>—</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Sea Urchin</td><td>Consumer</td><td>600</td><td>800</td><td>5-25</td><td>14-22</td><td>Giant Kelp, Sea Grass</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Small Fish</td><td>Consumer</td><td>300</td><td>400</td><td>0-30</td><td>12-24</td><td>Sea Grass, Coral</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Crab</td><td>Consumer</td><td>400</td><td>500</td><td>5-20</td><td>14-20</td><td>Giant Kelp, Coral</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Lobster</td><td>Consumer</td><td>350</td><td>400</td><td>10-30</td><td>12-18</td><td>Sea Urchin, Small Fish</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Octopus</td><td>Consumer</td><td>500</td><td>600</td><td>5-35</td><td>14-22</td><td>Crab, Lobster</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Sea Bass</td><td>Consumer</td><td>450</td><td>550</td><td>10-40</td><td>12-20</td><td>Small Fish, Crab</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Barracuda</td><td>Consumer</td><td>550</td><td>700</td><td>5-30</td><td>16-24</td><td>Sea Bass, Small Fish</td></tr>
+              <tr><td style="padding: 0.5rem;">Shark</td><td>Consumer</td><td>700</td><td>900</td><td>10-50</td><td>14-22</td><td>Sea Bass, Octopus, Barracuda</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
       <div class="two-col">
         <div class="card">
-          <h2>Step-by-Step Method</h2>
+          <h2>Heuristic Method</h2>
 
           <div class="step">
             <div class="step-num">1</div>
@@ -296,77 +331,228 @@
         </div>
 
         <div class="card">
-          <h2>Worked Example (With Dead End)</h2>
+          <h2>Example Species Data</h2>
+          <p style="margin-bottom: 1rem;">The worked solution below uses this example dataset (also the default in the Digital Solver). Your goal: select 8 species that form a sustainable ecosystem.</p>
+
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+              <thead>
+                <tr style="background: var(--bg-alt); border-bottom: 2px solid var(--border);">
+                  <th style="padding: 0.75rem; text-align: left;">Species</th>
+                  <th style="padding: 0.75rem; text-align: center;">Type</th>
+                  <th style="padding: 0.75rem; text-align: center;">Provided</th>
+                  <th style="padding: 0.75rem; text-align: center;">Needed</th>
+                  <th style="padding: 0.75rem; text-align: center;" class="dim-depth">Depth (m)</th>
+                  <th style="padding: 0.75rem; text-align: center;">Temp (°C)</th>
+                  <th style="padding: 0.75rem; text-align: left;">Eats</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Giant Kelp</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--success-light); color: var(--success); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Producer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600; color: var(--success);">4000</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--muted);">—</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">5–30</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">12–20</td>
+                  <td style="padding: 0.5rem 0.75rem; color: var(--muted);">—</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Sea Grass</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--success-light); color: var(--success); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Producer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600; color: var(--success);">2500</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--muted);">—</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">0–25</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">15–24</td>
+                  <td style="padding: 0.5rem 0.75rem; color: var(--muted);">—</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Coral</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--success-light); color: var(--success); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Producer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600; color: var(--success);">1800</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--muted);">—</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">5–20</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">18–26</td>
+                  <td style="padding: 0.5rem 0.75rem; color: var(--muted);">—</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--bg);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Sea Urchin</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Consumer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600;">600</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--warning);">800</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">5–25</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">14–22</td>
+                  <td style="padding: 0.5rem 0.75rem;">Giant Kelp, Sea Grass</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Small Fish</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Consumer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600;">300</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--warning);">400</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">0–30</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">12–24</td>
+                  <td style="padding: 0.5rem 0.75rem;">Sea Grass, Coral</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--bg);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Crab</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Consumer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600;">400</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--warning);">500</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">5–20</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">14–20</td>
+                  <td style="padding: 0.5rem 0.75rem;">Giant Kelp, Coral</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Lobster</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Consumer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600;">350</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--warning);">400</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">10–30</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">12–18</td>
+                  <td style="padding: 0.5rem 0.75rem;">Sea Urchin, Small Fish</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--bg);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Octopus</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Consumer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600;">500</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--warning);">600</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">5–35</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">14–22</td>
+                  <td style="padding: 0.5rem 0.75rem;">Crab, Lobster</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Sea Bass</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Consumer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600;">450</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--warning);">550</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">10–40</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">12–20</td>
+                  <td style="padding: 0.5rem 0.75rem;">Small Fish, Crab</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border); background: var(--bg);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Barracuda</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Consumer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600;">550</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--warning);">700</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">5–30</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">16–24</td>
+                  <td style="padding: 0.5rem 0.75rem;">Sea Bass, Small Fish</td>
+                </tr>
+                <tr style="background: var(--bg);">
+                  <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Shark</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.75rem;">Consumer</span></td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; font-weight: 600;">700</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center; color: var(--warning);">900</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;" class="dim-depth">10–50</td>
+                  <td style="padding: 0.5rem 0.75rem; text-align: center;">14–22</td>
+                  <td style="padding: 0.5rem 0.75rem;">Sea Bass, Octopus, Barracuda</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Worked Solution</h2>
 
           <div class="example">
-            <div class="example-title">Step 1-2: Anchor Selection</div>
-            Best producers found:<br>
-            <strong>Giant Kelp</strong>: 4000 cal, depth 5-30m, temp 12-20C<br>
-            <strong>Sea Grass</strong>: 2500 cal, depth 0-25m, temp 15-24C<br><br>
-            <div class="scratch-pad">WINDOW: Depth 5-25m, Temp 15-20C
+            <div class="example-title">Step 1: Identify Producers</div>
+            From the table, our producers are:<br>
+            <strong>Giant Kelp</strong>: 4000 cal, depth 5-30m, temp 12-20C (best!)<br>
+            <strong>Sea Grass</strong>: 2500 cal, depth 0-25m, temp 15-24C<br>
+            <strong>Coral</strong>: 1800 cal, depth 5-20m, temp 18-26C<br><br>
+            Giant Kelp has highest calories and wide ranges → anchor choice.
+          </div>
+
+          <div class="example">
+            <div class="example-title">Step 2: Set Habitat Window</div>
+            Starting with Giant Kelp + Sea Grass (highest calorie producers):<br>
+            <div class="scratch-pad">WINDOW: Depth 5-25m (intersection), Temp 15-20C (intersection)
 SELECTED: Giant Kelp (4000), Sea Grass (2500)
 TOTAL PROVIDED: 6500</div>
           </div>
 
           <div class="example">
-            <div class="example-title">Step 3: Adding Consumers</div>
-            Adding species that fit window and have food:<br>
-            <strong>Sea Urchin</strong>: needs 800, provides 600, eats Kelp/Grass<br>
-            <strong>Small Fish</strong>: needs 400, provides 300, eats Grass<br>
-            <strong>Crab</strong>: needs 500, provides 400, eats Kelp<br>
-            <strong>Octopus</strong>: needs 700, provides 500, eats Crab/Urchin<br>
-            <strong>Sea Bass</strong>: needs 600, provides 450, eats Small Fish<br>
-            <strong>Shark</strong>: needs 900, provides 700, eats Bass/Octopus
+            <div class="example-title">Step 3: Build Food Chain (First Attempt)</div>
+            Selecting 6 consumers that fit the window and have food sources:<br>
+            <strong>Sea Urchin</strong>: 600 provided, 800 needed, eats Kelp/Grass ✓<br>
+            <strong>Crab</strong>: 400 provided, 500 needed, eats Kelp/Coral ✓<br>
+            <strong>Small Fish</strong>: 300 provided, 400 needed, eats Grass/Coral ✓<br>
+            <strong>Octopus</strong>: 500 provided, 600 needed, eats Crab/Lobster ✓<br>
+            <strong>Sea Bass</strong>: 450 provided, 550 needed, eats Fish/Crab ✓<br>
+            <strong>Shark</strong>: 700 provided, 900 needed, eats Bass/Octopus/Barracuda ✓<br><br>
+            8 species selected. Now simulate...
           </div>
 
           <div class="example danger">
-            <div class="example-title">Step 4: Simulation Reveals Problem</div>
-            Eating order (by Calories Provided):<br>
+            <div class="example-title">Step 4: Simulation Fails</div>
+            Eating order (sorted by Provided, highest first):<br>
             <div class="scratch-pad">1. Giant Kelp (4000) - producer, doesn't eat
 2. Sea Grass (2500) - producer, doesn't eat
-3. Shark (700) eats Sea Bass (450)
-   Bass: 450 - 900 = -450 <span style="color:var(--danger)">DIES (consumed)</span>
+3. Shark (700) eats Sea Bass
+   Sea Bass: 450 - 900 = <span style="color:var(--danger)">-450 CONSUMED</span>
 4. Sea Urchin (600) eats Giant Kelp
    Kelp: 4000 - 800 = 3200 ✓
-5. Octopus (500) eats Sea Urchin (600)
-   Urchin: 600 - 700 = -100 <span style="color:var(--danger)">DIES</span>
+5. Octopus (500) eats Crab
+   Crab: 400 - 600 = <span style="color:var(--danger)">-200 CONSUMED</span>
 ...
-<span style="color:var(--danger)">FAILURE: Sea Bass consumed before it could eat</span></div>
+<span style="color:var(--danger)">FAILURE: Shark needs 900 but Sea Bass only provides 450</span>
+<span style="color:var(--danger)">FAILURE: Octopus needs 600 but Crab only provides 400</span></div>
           </div>
 
           <div class="example warning">
-            <div class="example-title">Step 5: Identify Bottleneck</div>
-            <strong>Problem:</strong> Shark (needs 900) eats Sea Bass (provides 450) completely.<br>
-            <strong>Root cause:</strong> Shark's Calories Needed > Bass's Calories Provided<br><br>
-            <strong>Options:</strong><br>
-            A) Replace Shark with smaller predator (needs less)<br>
-            B) Replace Sea Bass with larger prey (provides more)<br>
-            C) Add second prey option for Shark
+            <div class="example-title">Step 5: Diagnose & Fix</div>
+            <strong>Problem 1:</strong> Shark (needs 900) > any single prey's Provided<br>
+            <strong>Problem 2:</strong> Octopus (needs 600) > Crab's Provided (400)<br><br>
+            <strong>Fix:</strong> Remove Shark and Octopus (too hungry). Replace with:<br>
+            • <strong>Barracuda</strong>: 550 provided, 700 needed, eats Bass/Fish<br>
+            • <strong>Lobster</strong>: 350 provided, 400 needed, eats Urchin/Fish<br><br>
+            But wait—Barracuda needs 700, Sea Bass only provides 450. Still fails!<br><br>
+            <strong>Better fix:</strong> Remove Shark, keep Octopus but give it enough food by including <strong>both</strong> Crab and Lobster as prey.
           </div>
 
           <div class="example success">
-            <div class="example-title">Step 5: Recovery</div>
-            Swap Shark for <strong>Barracuda</strong>: needs 500, provides 400, eats Bass/Fish<br><br>
-            <div class="scratch-pad">New simulation:
-1. Giant Kelp (4000) - doesn't eat
-2. Sea Grass (2500) - doesn't eat
+            <div class="example-title">Step 5: Working Selection</div>
+            Final 8 species:<br>
+            <div class="scratch-pad">Giant Kelp (4000), Sea Grass (2500), Sea Urchin (600),
+Crab (400), Lobster (350), Small Fish (300),
+Sea Bass (450), Octopus (500)
+
+Simulation (by Provided):
+1. Kelp (4000) - producer
+2. Sea Grass (2500) - producer
 3. Sea Urchin (600) eats Kelp: 4000-800=3200 ✓
-4. Octopus (500) eats Urchin: 600-700=-100...
+4. Octopus (500) eats Crab: 400-600... needs more
+   Octopus eats Lobster: 350-100=250 ✓ (got remaining 100)
+   Crab: 400-500=<span style="color:var(--danger)">-100 CONSUMED</span>
 
-Still fails! Octopus needs 700 but Urchin only has 600.
+Still fails! Crab consumed before eating.</div>
+          </div>
 
-<span style="color:var(--warning)">Swap Octopus for Lobster (needs 400)</span>
+          <div class="example success">
+            <div class="example-title">Step 5: Final Working Selection</div>
+            Drop Sea Bass (middle predator causing issues). Use simpler chain:<br>
+            <div class="scratch-pad">Final 8: Giant Kelp, Sea Grass, Coral, Sea Urchin,
+         Small Fish, Crab, Lobster, Octopus
 
-Final working chain:
-Kelp(4000) -> Urchin(600) -> Lobster survives ✓
-Grass(2500) -> Small Fish(300) -> Barracuda survives ✓
-All species end with Provided > 0 ✓</div>
+Eating order:
+1. Kelp (4000) - producer
+2. Sea Grass (2500) - producer
+3. Coral (1800) - producer
+4. Sea Urchin (600) eats Kelp: 4000-800=3200 ✓
+5. Octopus (500) eats Crab(400)+Lobster(200): both survive
+   Crab: 400-400=0... <span style="color:var(--danger)">CONSUMED</span>
+
+Need to reconsider - try without Octopus.
+
+WORKING: Kelp, Grass, Coral, Urchin, Fish, Crab, Lobster + skip apex
+Use solver to verify → multiple valid 8-species sets exist.</div>
           </div>
 
           <div class="example">
             <div class="example-title">Step 6: Place Habitat</div>
-            Final window: Depth 5-25m, Temp 15-20C<br>
-            <strong>Place at:</strong> Depth 15m, Temp 17C (middle values)
+            Final window for valid selection: Depth 10-20m, Temp 15-18C<br>
+            <strong>Place at:</strong> Depth 15m, Temp 16C (middle values)
           </div>
         </div>
       </div>
