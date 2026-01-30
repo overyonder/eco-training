@@ -217,16 +217,17 @@
 
         <div class="collapsible" id="why-collapsible">
           <div class="collapsible-toggle" onclick="toggleCollapsible('why-collapsible')">
-            Why can't I solve this mathematically?
+            Why can't I solve this by hand?
           </div>
           <div class="collapsible-content">
-            <p style="margin-bottom: 1rem;">The ecosystem game combines multiple NP-hard problems:</p>
+            <p style="margin-bottom: 1rem;"><strong>A computer solves this trivially</strong> — brute force C(39,8) = 77 million combinations, each verifiable in microseconds. The Digital Solver tab does exactly this.</p>
+            <p style="margin-bottom: 1rem;"><strong>A human cannot</strong> because in 35 minutes you can't:</p>
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-              <li><strong>Clique finding</strong> — 8 mutually compatible species from 39</li>
-              <li><strong>Sequential simulation</strong> — eating order depends on current state</li>
-              <li><strong>Resource flow</strong> — calories deplete as simulation runs</li>
+              <li>Enumerate millions of combinations</li>
+              <li>Run the eating simulation mentally for many candidates</li>
+              <li>Track calorie depletion across multiple food chains</li>
             </ul>
-            <p>No matrix transformation or closed-form solution exists. The structured heuristic approach below is how humans solve it efficiently.</p>
+            <p>The heuristic approach below lets you prune the search space to a manageable size by making smart choices early (high-calorie producers, compatible ranges) and backtracking only when necessary.</p>
           </div>
         </div>
       </div>
