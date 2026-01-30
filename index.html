@@ -3,19 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>McKinsey Ecosystem Game Solver</title>
+  <title>Ecosystem Game Trainer</title>
   <style>
     :root {
-      --bg: #0f1419;
-      --card: #1a2332;
-      --border: #2d3748;
-      --text: #e2e8f0;
-      --muted: #8892a0;
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
+      --bg: #f8fafc;
+      --bg-alt: #ffffff;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+      --accent: #0ea5e9;
+      --accent-hover: #0284c7;
+      --accent-light: #e0f2fe;
       --success: #10b981;
+      --success-light: #d1fae5;
       --warning: #f59e0b;
       --danger: #ef4444;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    }
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --bg-alt: #1e293b;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0ea5e9;
+      --accent-light: #0c4a6e;
+      --success: #34d399;
+      --success-light: #064e3b;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.3);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -24,28 +44,76 @@
       color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
     }
     .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    h1 { font-size: 1.75rem; margin-bottom: 1.5rem; }
-    h2 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--accent); }
-    h3 { font-size: 1rem; margin-bottom: 0.5rem; }
 
-    /* Tabs */
-    .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .tab {
-      padding: 0.75rem 1.5rem;
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header-actions { display: flex; gap: 0.5rem; align-items: center; }
+
+    /* Theme toggle */
+    .theme-toggle {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 0.5rem 0.5rem 0 0;
+      border-radius: 2rem;
+      padding: 0.5rem;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
       color: var(--muted);
       transition: all 0.2s;
     }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--text); }
+    .theme-toggle svg { width: 1.25rem; height: 1.25rem; }
+
+    h2 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--text); font-weight: 600; }
+    h3 { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 600; }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0.25rem;
+      margin-bottom: 1.5rem;
+      background: var(--bg-alt);
+      padding: 0.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border);
+    }
+    .tab {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 500;
+      transition: all 0.2s;
+      flex: 1;
+      text-align: center;
+    }
     .tab:hover { color: var(--text); }
     .tab.active {
-      background: var(--border);
+      background: var(--card);
       color: var(--text);
-      border-bottom-color: var(--border);
+      box-shadow: var(--shadow);
     }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
@@ -54,69 +122,101 @@
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 0.5rem;
+      border-radius: 1rem;
       padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 1rem;
     }
 
     /* Buttons */
     button, .btn {
-      padding: 0.5rem 1rem;
+      padding: 0.625rem 1.25rem;
       border: none;
-      border-radius: 0.375rem;
+      border-radius: 0.5rem;
       cursor: pointer;
       font-size: 0.875rem;
+      font-weight: 500;
       transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { background: var(--accent-hover); }
-    .btn-secondary { background: var(--border); color: var(--text); }
-    .btn-secondary:hover { background: #3d4a5c; }
-    .btn-danger { background: var(--danger); color: white; }
-    .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--bg-alt);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--border); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      padding: 0.5rem;
+    }
+    .btn-ghost:hover { color: var(--text); background: var(--bg-alt); }
+    .btn-download {
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      color: white;
+    }
+    .btn-download:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
 
     /* Forms */
     input, select {
       background: var(--bg);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 0.5rem;
-      border-radius: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
       font-size: 0.875rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
     input:focus, select:focus {
       outline: none;
       border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
     }
-    label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 0.25rem; }
+    label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 0.25rem; font-weight: 500; }
 
     /* Species Grid */
     .species-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1rem;
       margin-bottom: 1rem;
     }
     .species-card {
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 0.5rem;
+      border-radius: 0.75rem;
       padding: 1rem;
       position: relative;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .species-card.selected { border-color: var(--success); }
+    .species-card:hover { border-color: var(--accent); }
     .species-card .delete {
       position: absolute;
       top: 0.5rem;
       right: 0.5rem;
       background: transparent;
       color: var(--muted);
-      padding: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
     }
-    .species-card .delete:hover { color: var(--danger); }
-    .species-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .species-card .delete:hover { color: var(--danger); background: #fef2f2; }
+    [data-theme="dark"] .species-card .delete:hover { background: #450a0a; }
+    .species-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
     .species-form .full { grid-column: 1 / -1; }
-    .species-name { font-weight: 600; margin-bottom: 0.5rem; }
 
     /* Collapsible */
     .collapsible { margin-bottom: 1rem; }
@@ -127,22 +227,25 @@
       cursor: pointer;
       color: var(--accent);
       font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.5rem 0;
     }
     .collapsible-toggle:hover { text-decoration: underline; }
     .collapsible-content {
       display: none;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       padding: 1rem;
       background: var(--bg);
-      border-radius: 0.375rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border);
     }
     .collapsible.open .collapsible-content { display: block; }
-    .collapsible-toggle::before { content: '▶'; font-size: 0.625rem; }
-    .collapsible.open .collapsible-toggle::before { content: '▼'; }
+    .collapsible-toggle::before { content: '▶'; font-size: 0.625rem; transition: transform 0.2s; }
+    .collapsible.open .collapsible-toggle::before { transform: rotate(90deg); }
 
     /* Two column layout */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
 
     /* Steps */
     .step {
@@ -152,99 +255,153 @@
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
-    .step:last-child { border-bottom: none; }
+    .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .step-num {
-      width: 2rem;
-      height: 2rem;
-      background: var(--accent);
+      width: 2.5rem;
+      height: 2.5rem;
+      background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+      color: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 600;
+      font-weight: 700;
       flex-shrink: 0;
+      font-size: 1rem;
     }
     .step-content { flex: 1; }
-    .step-title { font-weight: 600; margin-bottom: 0.5rem; }
+    .step-title { font-weight: 600; margin-bottom: 0.5rem; font-size: 1rem; }
 
     /* Example box */
     .example {
       background: var(--bg);
       border-left: 3px solid var(--accent);
       padding: 1rem;
-      margin-top: 0.5rem;
+      margin-top: 0.75rem;
+      border-radius: 0 0.5rem 0.5rem 0;
       font-size: 0.875rem;
     }
-    .example-title { color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+    .example-title {
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
 
     /* Results */
     .results { margin-top: 1.5rem; }
-    .result-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .result-valid { color: var(--success); }
-    .result-invalid { color: var(--danger); }
+    .result-invalid { color: var(--danger); padding: 1rem; background: #fef2f2; border-radius: 0.5rem; }
+    [data-theme="dark"] .result-invalid { background: #450a0a; }
 
     /* Habitat window tracker */
     .habitat-tracker {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0.5rem;
+      gap: 0.75rem;
       margin-top: 1rem;
     }
+    @media (max-width: 600px) { .habitat-tracker { grid-template-columns: repeat(2, 1fr); } }
     .habitat-dim {
       background: var(--bg);
-      padding: 0.5rem;
-      border-radius: 0.375rem;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
       text-align: center;
       font-size: 0.75rem;
+      border: 1px solid var(--border);
     }
-    .habitat-dim .value { font-size: 1rem; font-weight: 600; color: var(--success); }
-    .habitat-dim.invalid .value { color: var(--danger); }
+    .habitat-dim .value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--success);
+      margin-top: 0.25rem;
+    }
 
     /* Solution display */
     .solution-species {
       display: inline-block;
-      background: var(--success);
-      color: var(--bg);
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
+      background: var(--success-light);
+      color: var(--success);
+      padding: 0.375rem 0.75rem;
+      border-radius: 2rem;
       margin: 0.25rem;
-      font-size: 0.875rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid var(--success);
     }
 
     /* Scratch pad */
     .scratch-pad {
-      font-family: monospace;
+      font-family: 'SF Mono', 'Fira Code', monospace;
       font-size: 0.8rem;
-      background: var(--bg);
+      background: var(--bg-alt);
       padding: 1rem;
-      border-radius: 0.375rem;
+      border-radius: 0.5rem;
       white-space: pre;
       overflow-x: auto;
+      border: 1px solid var(--border);
+      line-height: 1.5;
     }
+    [data-theme="dark"] .scratch-pad { background: #0f172a; }
 
     /* Quick add */
-    .quick-add { margin-bottom: 1rem; }
-    .quick-add select { margin-right: 0.5rem; }
+    .quick-add { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+
+    /* Alert banner */
+    .alert {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .alert-info {
+      background: var(--accent-light);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    [data-theme="dark"] .alert-info { color: var(--text); }
+    .alert svg { flex-shrink: 0; margin-top: 0.125rem; }
+
+    /* Solution card */
+    .solution-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>McKinsey Ecosystem Game Solver</h1>
+    <div class="header">
+      <h1>Ecosystem Game Trainer</h1>
+      <div class="header-actions">
+        <a href="template.pdf" download class="btn btn-download">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download Template
+        </a>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <svg class="sun" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon" style="display:none" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
 
     <div class="tabs">
-      <div class="tab active" data-tab="heuristics">Heuristics (In-Person)</div>
-      <div class="tab" data-tab="algorithm">Algorithm (Digital)</div>
+      <button class="tab active" data-tab="heuristics">In-Person Method</button>
+      <button class="tab" data-tab="algorithm">Digital Solver</button>
     </div>
 
     <!-- HEURISTICS TAB -->
     <div id="heuristics" class="tab-content active">
       <div class="card">
-        <h2>Solving the Ecosystem Game In-Person</h2>
+        <div class="card-header">
+          <h2>Solving the Ecosystem Game In-Person</h2>
+        </div>
 
         <div class="collapsible" id="why-collapsible">
           <div class="collapsible-toggle" onclick="toggleCollapsible('why-collapsible')">
@@ -260,7 +417,7 @@
             </ul>
             <p style="margin-bottom: 1rem;">There's no matrix transformation or closed-form solution. The selection problem is NP-hard (finding an 8-clique in a compatibility graph). Even simplified, you'd need to:</p>
             <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-              <li>Track a 39×39 compatibility matrix (1,521 cells)</li>
+              <li>Track a 39x39 compatibility matrix (1,521 cells)</li>
               <li>Check food chain validity via adjacency matrix powers</li>
               <li>Solve a linear program for caloric flow</li>
             </ul>
@@ -276,15 +433,15 @@
           <div class="step">
             <div class="step-num">1</div>
             <div class="step-content">
-              <div class="step-title">Scan & Identify Producers (3-5 min)</div>
-              <p>Find the 2-3 producers (calories needed = 0) with the <strong>widest environmental ranges</strong> and <strong>highest calories provided</strong>. These anchor your ecosystem.</p>
+              <div class="step-title">Scan & Identify Producers</div>
+              <p>Find 2-3 producers (calories needed = 0) with the <strong>widest environmental ranges</strong> and <strong>highest calories provided</strong>. These anchor your ecosystem.</p>
             </div>
           </div>
 
           <div class="step">
             <div class="step-num">2</div>
             <div class="step-content">
-              <div class="step-title">Pick Anchor & Set Habitat Window (2 min)</div>
+              <div class="step-title">Pick Anchor & Set Habitat Window</div>
               <p>Choose your primary producer. Write down its ranges — this is your initial <strong>habitat window</strong>. All future picks must fit within it.</p>
             </div>
           </div>
@@ -292,11 +449,11 @@
           <div class="step">
             <div class="step-num">3</div>
             <div class="step-content">
-              <div class="step-title">Add Species Bottom-Up (15-20 min)</div>
+              <div class="step-title">Add Species Bottom-Up</div>
               <p>For each new species, ask three questions <strong>in order</strong>:</p>
               <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                <li>Does it fit the habitat window? (If no → skip)</li>
-                <li>Can it eat something already selected? (If no → skip)</li>
+                <li>Does it fit the habitat window? (If no, skip)</li>
+                <li>Can it eat something already selected? (If no, skip)</li>
                 <li>Does it narrow the window dangerously? (Update bounds)</li>
               </ol>
             </div>
@@ -305,15 +462,15 @@
           <div class="step">
             <div class="step-num">4</div>
             <div class="step-content">
-              <div class="step-title">Calorie Check (3-5 min)</div>
-              <p>Sum up: <strong>Total Provided</strong> (all species) vs <strong>Total Needed</strong> (consumers only). Provided should be ≥ 1.5× needed for safety margin.</p>
+              <div class="step-title">Calorie Check</div>
+              <p>Sum up: <strong>Total Provided</strong> (all species) vs <strong>Total Needed</strong> (consumers only). Provided should be >= 1.5x needed for safety margin.</p>
             </div>
           </div>
 
           <div class="step">
             <div class="step-num">5</div>
             <div class="step-content">
-              <div class="step-title">Verify & Select Habitat (5 min)</div>
+              <div class="step-title">Verify & Select Habitat</div>
               <p>Confirm every consumer can point to its food source. Pick habitat values <strong>in the middle</strong> of your final window ranges.</p>
             </div>
           </div>
@@ -325,17 +482,17 @@
           <div class="example">
             <div class="example-title">Step 1: Identify Producers</div>
             Scanning cards, I find:<br>
-            • <strong>Brain Coral</strong>: 5000 cal, depth 0-40m, temp 20-35°C ✓<br>
-            • <strong>Seaweed</strong>: 1800 cal, depth 0-30m, temp 18-32°C ✓<br>
-            • <strong>Green Coral</strong>: 2000 cal, depth 5-25m, temp 22-30°C<br><br>
-            Brain Coral has widest range + highest calories → anchor
+            <strong>Brain Coral</strong>: 5000 cal, depth 0-40m, temp 20-35C<br>
+            <strong>Seaweed</strong>: 1800 cal, depth 0-30m, temp 18-32C<br>
+            <strong>Green Coral</strong>: 2000 cal, depth 5-25m, temp 22-30C<br><br>
+            Brain Coral has widest range + highest calories = anchor
           </div>
 
           <div class="example">
             <div class="example-title">Step 2: Initial Habitat Window</div>
             <div class="scratch-pad">HABITAT WINDOW:
   Depth: [ 0 ] - [ 40 ] m
-  Temp:  [ 20 ] - [ 35 ] °C
+  Temp:  [ 20 ] - [ 35 ] C
   Salt:  [ 32 ] - [ 42 ] ppt
 
 SELECTED: Brain Coral
@@ -344,50 +501,56 @@ CALORIES: P=5000 / N=0</div>
 
           <div class="example">
             <div class="example-title">Step 3: Adding Yellow Fish</div>
-            Yellow Fish: depth 0-30m, temp 18-34°C, needs 10 cal<br>
-            Eats: Brain Coral ✓ (already selected)<br><br>
+            Yellow Fish: depth 0-30m, temp 18-34C, needs 10 cal<br>
+            Eats: Brain Coral (already selected)<br><br>
             <strong>Update window:</strong>
             <div class="scratch-pad">HABITAT WINDOW:
-  Depth: [ 0 ] - [ 30 ] m  ← narrowed
-  Temp:  [ 20 ] - [ 34 ] °C ← narrowed
+  Depth: [ 0 ] - [ 30 ] m  &lt;- narrowed
+  Temp:  [ 20 ] - [ 34 ] C &lt;- narrowed
 
 SELECTED: Brain Coral, Yellow Fish
-CALORIES: P=7500 / N=240 (24 fish × 10)</div>
+CALORIES: P=7500 / N=240</div>
           </div>
 
           <div class="example">
             <div class="example-title">Step 4: Final Check</div>
-            After selecting 8 species:<br><br>
+            After selecting 8 species:<br>
             <div class="scratch-pad">FINAL WINDOW:
   Depth: [ 5 ] - [ 25 ] m
-  Temp:  [ 22 ] - [ 30 ] °C
+  Temp:  [ 22 ] - [ 30 ] C
   Salt:  [ 32 ] - [ 40 ] ppt
 
 FOOD CHAINS:
-  Shark → Big Eyed Fish → Yellow Fish → Brain Coral ✓
-  Turtle → Seaweed ✓
+  Shark -> Big Eyed Fish -> Yellow Fish -> Brain Coral
+  Turtle -> Seaweed
 
-CALORIES: P=12,300 / N=7,840  (ratio 1.57×) ✓</div>
+CALORIES: P=12,300 / N=7,840  (ratio 1.57x)</div>
           </div>
 
           <div class="example">
             <div class="example-title">Step 5: Habitat Selection</div>
             Pick middle values:<br>
-            • Depth: <strong>15m</strong> (middle of 5-25)<br>
-            • Temp: <strong>26°C</strong> (middle of 22-30)<br>
-            • Salt: <strong>36 ppt</strong> (middle of 32-40)
+            Depth: <strong>15m</strong> (middle of 5-25)<br>
+            Temp: <strong>26C</strong> (middle of 22-30)<br>
+            Salt: <strong>36 ppt</strong> (middle of 32-40)
           </div>
         </div>
       </div>
 
       <div class="card">
-        <h2>Scratch Pad Template</h2>
-        <p style="margin-bottom: 1rem; color: var(--muted);">Copy this structure onto paper before starting:</p>
+        <div class="card-header">
+          <h2>Scratch Pad Template</h2>
+          <a href="template.pdf" download class="btn btn-download btn-sm">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download PDF
+          </a>
+        </div>
+        <p style="margin-bottom: 1rem; color: var(--muted);">Print this template or copy onto paper before starting:</p>
         <div class="scratch-pad">HABITAT WINDOW (update as you add species):
-  Depth: [    ] - [    ] m
-  Temp:  [    ] - [    ] °C
-  Salt:  [    ] - [    ] ppt
-  Current: [  ] - [    ] cfs
+  Depth:   [    ] - [    ] m
+  Temp:    [    ] - [    ] C
+  Salt:    [    ] - [    ] ppt
+  Current: [    ] - [    ] cfs
 
 SELECTED (8 slots):
   1. _____________ (producer, provides ____)
@@ -400,9 +563,9 @@ SELECTED (8 slots):
   8. _____________ (eats: ____, needs ____)
 
 CALORIE TOTALS:
-  Provided: _______ (sum of all provided × population)
-  Needed:   _______ (sum of consumer needed × population)
-  Ratio:    _______ (target ≥ 1.5)</div>
+  Provided: _______ (sum of all provided x population)
+  Needed:   _______ (sum of consumer needed x population)
+  Ratio:    _______ (target >= 1.5)</div>
       </div>
     </div>
 
@@ -413,18 +576,22 @@ CALORIE TOTALS:
         <p style="color: var(--muted); margin-bottom: 1rem;">Enter species from the game. The solver will find valid 8-species ecosystems.</p>
 
         <div class="quick-add">
-          <button class="btn btn-primary" onclick="addSpecies()">+ Add Species</button>
-          <button class="btn btn-secondary" onclick="loadExample()">Load Example Data</button>
+          <button class="btn btn-primary" onclick="addSpecies()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            Add Species
+          </button>
+          <button class="btn btn-secondary" onclick="loadExample()">Load Example</button>
           <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
         </div>
 
         <div class="species-grid" id="species-grid"></div>
 
-        <div style="margin-top: 1rem;">
-          <button class="btn btn-primary" onclick="solve()" style="padding: 0.75rem 2rem; font-size: 1rem;">
-            🔍 Find Valid Ecosystems
+        <div style="margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="solve()" style="padding: 0.75rem 2rem;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            Find Valid Ecosystems
           </button>
-          <span style="margin-left: 1rem; color: var(--muted);" id="species-count">0 species entered</span>
+          <span style="color: var(--muted);" id="species-count">0 species entered</span>
         </div>
       </div>
 
@@ -445,7 +612,7 @@ CALORIE TOTALS:
               <li style="margin-bottom: 0.5rem;"><strong>Precompute compatibility</strong> — Build a graph where edges connect species with overlapping habitat ranges</li>
               <li style="margin-bottom: 0.5rem;"><strong>Start with producers</strong> — They have no caloric needs and anchor the food chain</li>
               <li style="margin-bottom: 0.5rem;"><strong>Greedy selection with pruning</strong> — Add species that fit the current habitat window and have valid food sources</li>
-              <li style="margin-bottom: 0.5rem;"><strong>Caloric validation</strong> — Check that total provided ≥ total needed</li>
+              <li style="margin-bottom: 0.5rem;"><strong>Caloric validation</strong> — Check that total provided >= total needed</li>
               <li style="margin-bottom: 0.5rem;"><strong>Backtrack on failure</strong> — If stuck, undo last choice and try alternatives</li>
             </ol>
             <p style="margin-top: 1rem; color: var(--muted);">For 39 species, this typically finds solutions in under a second. The search space is pruned aggressively by habitat compatibility.</p>
@@ -458,6 +625,24 @@ CALORIE TOTALS:
   <script>
     let species = [];
     let speciesId = 0;
+
+    // Theme
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      updateThemeIcon();
+    }
+    function updateThemeIcon() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.querySelector('.sun').style.display = isDark ? 'none' : 'block';
+      document.querySelector('.moon').style.display = isDark ? 'block' : 'none';
+    }
+    // Initialize theme
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon();
 
     // Tab switching
     document.querySelectorAll('.tab').forEach(tab => {
@@ -484,8 +669,7 @@ CALORIE TOTALS:
         caloriesNeeded: 0,
         caloriesProvided: 1000,
         population: 10,
-        foodSources: '',
-        predators: ''
+        foodSources: ''
       };
       s.id = id;
       species.push(s);
@@ -513,7 +697,7 @@ CALORIE TOTALS:
       const grid = document.getElementById('species-grid');
       grid.innerHTML = species.map(s => `
         <div class="species-card" id="species-${s.id}">
-          <button class="delete btn" onclick="removeSpecies(${s.id})">✕</button>
+          <button class="delete btn btn-ghost" onclick="removeSpecies(${s.id})">✕</button>
           <div class="species-form">
             <div class="full">
               <label>Name</label>
@@ -521,7 +705,7 @@ CALORIE TOTALS:
             </div>
             <div>
               <label>Type</label>
-              <select onchange="updateSpecies(${s.id}, 'type', this.value)">
+              <select onchange="updateSpecies(${s.id}, 'type', this.value)" style="width: 100%">
                 <option value="producer" ${s.type === 'producer' ? 'selected' : ''}>Producer</option>
                 <option value="wildlife" ${s.type === 'wildlife' ? 'selected' : ''}>Wildlife</option>
               </select>
@@ -539,11 +723,11 @@ CALORIE TOTALS:
               <input type="number" value="${s.depthMax}" onchange="updateSpecies(${s.id}, 'depthMax', this.value)" style="width: 100%">
             </div>
             <div>
-              <label>Temp Min (°C)</label>
+              <label>Temp Min (C)</label>
               <input type="number" value="${s.tempMin}" onchange="updateSpecies(${s.id}, 'tempMin', this.value)" style="width: 100%">
             </div>
             <div>
-              <label>Temp Max (°C)</label>
+              <label>Temp Max (C)</label>
               <input type="number" value="${s.tempMax}" onchange="updateSpecies(${s.id}, 'tempMax', this.value)" style="width: 100%">
             </div>
             <div>
@@ -563,7 +747,7 @@ CALORIE TOTALS:
               <input type="number" value="${s.caloriesProvided}" onchange="updateSpecies(${s.id}, 'caloriesProvided', this.value)" style="width: 100%">
             </div>
             <div class="full">
-              <label>Food Sources (comma-separated names)</label>
+              <label>Food Sources (comma-separated)</label>
               <input type="text" value="${s.foodSources}" onchange="updateSpecies(${s.id}, 'foodSources', this.value)" style="width: 100%" placeholder="e.g., Brain Coral, Seaweed">
             </div>
           </div>
@@ -595,12 +779,6 @@ CALORIE TOTALS:
       speciesId = 0;
       renderSpecies();
       document.getElementById('results').style.display = 'none';
-    }
-
-    function rangesOverlap(s1, s2) {
-      return s1.depthMin <= s2.depthMax && s2.depthMin <= s1.depthMax &&
-             s1.tempMin <= s2.tempMax && s2.tempMin <= s1.tempMax &&
-             s1.saltMin <= s2.saltMax && s2.saltMin <= s1.saltMax;
     }
 
     function getHabitatWindow(selected) {
@@ -641,9 +819,8 @@ CALORIE TOTALS:
       const producers = species.filter(s => s.type === 'producer');
       const consumers = species.filter(s => s.type !== 'producer');
 
-      // Try combinations starting with producers
-      function search(selected, remaining, depth) {
-        if (solutions.length >= 10) return; // Limit solutions
+      function search(selected, remaining) {
+        if (solutions.length >= 10) return;
 
         if (selected.length === 8) {
           const cal = checkCalories(selected);
@@ -662,26 +839,20 @@ CALORIE TOTALS:
           const newSelected = [...selected, candidate];
           const window = getHabitatWindow(newSelected);
 
-          // Prune: invalid habitat window
           if (!isWindowValid(window)) continue;
-
-          // Prune: consumer without food source
           if (!canEat(candidate, newSelected)) continue;
 
-          // Recurse
-          search(newSelected, remaining.slice(i + 1), depth + 1);
+          search(newSelected, remaining.slice(i + 1));
         }
       }
 
-      // Sort: producers first, then by calories provided
       const sorted = [...producers, ...consumers].sort((a, b) => {
         if (a.type === 'producer' && b.type !== 'producer') return -1;
         if (a.type !== 'producer' && b.type === 'producer') return 1;
         return b.caloriesProvided - a.caloriesProvided;
       });
 
-      search([], sorted, 0);
-
+      search([], sorted);
       displayResults(solutions);
     }
 
@@ -696,7 +867,7 @@ CALORIE TOTALS:
       }
 
       content.innerHTML = solutions.map((sol, i) => `
-        <div class="card" style="background: var(--bg);">
+        <div class="solution-card">
           <h3>Solution ${i + 1}</h3>
           <div style="margin: 1rem 0;">
             ${sol.species.map(s => `<span class="solution-species">${s.name}</span>`).join('')}
@@ -708,7 +879,7 @@ CALORIE TOTALS:
             </div>
             <div class="habitat-dim">
               <div>Temp</div>
-              <div class="value">${sol.habitat.tempMin}-${sol.habitat.tempMax}°C</div>
+              <div class="value">${sol.habitat.tempMin}-${sol.habitat.tempMax}C</div>
             </div>
             <div class="habitat-dim">
               <div>Salinity</div>
@@ -716,7 +887,7 @@ CALORIE TOTALS:
             </div>
             <div class="habitat-dim">
               <div>Calories</div>
-              <div class="value">${sol.calories.ratio.toFixed(1)}× ratio</div>
+              <div class="value">${sol.calories.ratio.toFixed(1)}x</div>
             </div>
           </div>
           <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--muted);">
@@ -726,7 +897,6 @@ CALORIE TOTALS:
       `).join('');
     }
 
-    // Initialize
     renderSpecies();
   </script>
 </body>
