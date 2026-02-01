@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example 1: Coral Reef - Ecosystem Game</title>
+  <style>
+    :root {
+      --bg: #f8fafc; --bg-alt: #ffffff; --card: #ffffff; --border: #e2e8f0;
+      --text: #1e293b; --muted: #64748b; --accent: #0ea5e9; --accent-hover: #0284c7;
+      --accent-light: #e0f2fe; --success: #10b981; --success-light: #d1fae5;
+      --warning: #f59e0b; --warning-light: #fef3c7; --danger: #ef4444; --danger-light: #fee2e2;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    [data-theme="dark"] {
+      --bg: #0f172a; --bg-alt: #1e293b; --card: #1e293b; --border: #334155;
+      --text: #f1f5f9; --muted: #94a3b8; --accent: #38bdf8; --accent-hover: #0ea5e9;
+      --accent-light: #0c4a6e; --success: #34d399; --success-light: #064e3b;
+      --warning: #fbbf24; --warning-light: #78350f; --danger: #f87171; --danger-light: #7f1d1d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .header h1 { font-size: 1.5rem; font-weight: 700; }
+    .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; }
+    .badge-easy { background: var(--success-light); color: var(--success); }
+    .badge-hard { background: var(--danger-light); color: var(--danger); }
+    .badge-reef { background: var(--accent-light); color: var(--accent); }
+    .badge-mountain { background: var(--warning-light); color: var(--warning); }
+    .btn { padding: 0.5rem 1rem; border: none; border-radius: 0.5rem; cursor: pointer; font-size: 0.875rem; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .btn-secondary { background: var(--bg-alt); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+    h2 { font-size: 1.25rem; margin-bottom: 1rem; font-weight: 600; }
+    h3 { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: var(--bg-alt); font-weight: 600; }
+    .center { text-align: center; }
+    .producer { background: var(--success-light); color: var(--success); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.7rem; }
+    .consumer { background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.7rem; }
+    .task-box { background: var(--bg-alt); border: 2px solid var(--accent); border-radius: 0.75rem; padding: 1.25rem; margin: 1rem 0; }
+    .task-box h3 { color: var(--accent); margin-bottom: 0.75rem; }
+    details { margin-top: 1.5rem; }
+    summary { cursor: pointer; padding: 1rem; background: var(--bg-alt); border-radius: 0.5rem; font-weight: 600; color: var(--accent); }
+    summary:hover { background: var(--border); }
+    .solution { padding: 1rem; margin-top: 0.5rem; background: var(--success-light); border-radius: 0.5rem; }
+    .solution h4 { color: var(--success); margin-bottom: 0.5rem; }
+    .scratch { font-family: monospace; background: var(--bg); padding: 1rem; border-radius: 0.5rem; white-space: pre-wrap; font-size: 0.8rem; margin: 0.5rem 0; }
+    .theme-toggle { background: var(--card); border: 1px solid var(--border); border-radius: 2rem; padding: 0.5rem; cursor: pointer; }
+    .nav-links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .nav-links a { font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav-links">
+      <a href="index.html" class="btn btn-secondary">← Back to Trainer</a>
+      <a href="example2.html" class="btn btn-secondary">Example 2</a>
+      <a href="example3.html" class="btn btn-secondary">Example 3</a>
+      <a href="example4.html" class="btn btn-secondary">Example 4</a>
+    </div>
+
+    <div class="header">
+      <h1>Example 1 <span class="badge badge-reef">Coral Reef</span> <span class="badge badge-easy">Easy</span></h1>
+      <button class="theme-toggle" onclick="document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')">Toggle Theme</button>
+    </div>
+
+    <div class="card">
+      <h2>Problem Statement</h2>
+      <p>Select <strong>8 species</strong> from the 12 available below to build a sustainable coral reef ecosystem. Then determine the optimal habitat placement.</p>
+
+      <div class="task-box">
+        <h3>Your Task</h3>
+        <ol style="margin-left: 1.5rem;">
+          <li>Find the overlapping depth and temperature range</li>
+          <li>Select 8 species that can all survive together</li>
+          <li>Verify using the eating simulation (highest Provided eats first)</li>
+          <li>Determine the habitat coordinates (middle of valid range)</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Available Species</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Species</th>
+            <th class="center">Type</th>
+            <th class="center">Provided</th>
+            <th class="center">Needed</th>
+            <th class="center">Depth (m)</th>
+            <th class="center">Temp (°C)</th>
+            <th>Eats</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Seaweed</strong></td><td class="center"><span class="producer">Producer</span></td><td class="center" style="color:var(--success);font-weight:600">3500</td><td class="center">—</td><td class="center">5–35</td><td class="center">18–26</td><td>—</td></tr>
+          <tr><td><strong>Kelp</strong></td><td class="center"><span class="producer">Producer</span></td><td class="center" style="color:var(--success);font-weight:600">3000</td><td class="center">—</td><td class="center">10–40</td><td class="center">15–22</td><td>—</td></tr>
+          <tr><td><strong>Coral</strong></td><td class="center"><span class="producer">Producer</span></td><td class="center" style="color:var(--success);font-weight:600">2000</td><td class="center">—</td><td class="center">5–25</td><td class="center">20–28</td><td>—</td></tr>
+          <tr><td><strong>Sea Snail</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">800</td><td class="center" style="color:var(--warning)">500</td><td class="center">5–30</td><td class="center">18–24</td><td>Seaweed, Kelp</td></tr>
+          <tr><td><strong>Shrimp</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">600</td><td class="center" style="color:var(--warning)">400</td><td class="center">10–35</td><td class="center">19–25</td><td>Seaweed, Coral</td></tr>
+          <tr><td><strong>Crab</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">700</td><td class="center" style="color:var(--warning)">550</td><td class="center">5–25</td><td class="center">18–24</td><td>Kelp, Coral</td></tr>
+          <tr><td><strong>Small Fish</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">500</td><td class="center" style="color:var(--warning)">350</td><td class="center">10–30</td><td class="center">20–26</td><td>Shrimp, Sea Snail</td></tr>
+          <tr><td><strong>Eel</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">650</td><td class="center" style="color:var(--warning)">500</td><td class="center">15–40</td><td class="center">18–24</td><td>Crab, Shrimp</td></tr>
+          <tr><td><strong>Octopus</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">750</td><td class="center" style="color:var(--warning)">600</td><td class="center">10–35</td><td class="center">17–23</td><td>Crab, Small Fish</td></tr>
+          <tr><td><strong>Sea Turtle</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">900</td><td class="center" style="color:var(--warning)">700</td><td class="center">5–30</td><td class="center">20–26</td><td>Seaweed, Small Fish</td></tr>
+          <tr><td><strong>Reef Shark</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">1100</td><td class="center" style="color:var(--warning)">950</td><td class="center">10–50</td><td class="center">18–26</td><td>Octopus, Eel, Small Fish</td></tr>
+          <tr><td><strong>Barracuda</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">850</td><td class="center" style="color:var(--warning)">750</td><td class="center">5–35</td><td class="center">20–28</td><td>Small Fish, Shrimp</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Your Answer</h2>
+      <p>Work through this problem using the heuristic method, then check your answer below.</p>
+
+      <div class="scratch">Selected Species (8):
+1. _________________ (_______ cal)
+2. _________________ (_______ cal)
+3. _________________ (_______ cal)
+4. _________________ (_______ cal)
+5. _________________ (_______ cal)
+6. _________________ (_______ cal)
+7. _________________ (_______ cal)
+8. _________________ (_______ cal)
+
+Habitat Window:
+  Depth: _____ – _____ m
+  Temp:  _____ – _____ °C
+
+Final Placement:
+  Depth: _____ m
+  Temp:  _____ °C</div>
+
+      <details>
+        <summary>Reveal Solution</summary>
+        <div class="solution">
+          <h4>Valid 8-Species Selection</h4>
+          <p><strong>Seaweed, Kelp, Coral, Sea Snail, Shrimp, Crab, Small Fish, Octopus</strong></p>
+
+          <h4 style="margin-top:1rem">Habitat Window</h4>
+          <p>Depth: 10–25m | Temp: 20–22°C</p>
+          <p><strong>Place at: Depth 17m, Temp 21°C</strong></p>
+
+          <h4 style="margin-top:1rem">Eating Simulation</h4>
+          <div class="scratch">Order (by Provided):
+1. Seaweed (3500) — producer
+2. Kelp (3000) — producer
+3. Coral (2000) — producer
+4. Sea Snail (800) eats Seaweed: 3500-500=3000 ✓
+5. Octopus (750) eats Crab: 700-600=100, needs 0 more ✓
+6. Crab (700→100) eats Kelp: 3000-550=2450 ✓
+7. Eel not selected
+8. Shrimp (600) eats Seaweed: 3000-400=2600 ✓
+9. Small Fish (500) eats Shrimp: 600-350=250 ✓
+   (Shrimp still has 250 Provided > 0)
+
+All 8 species survive. Crab survives with 100 remaining.</div>
+
+          <h4 style="margin-top:1rem">Why This Works</h4>
+          <ul style="margin-left:1.5rem;margin-top:0.5rem">
+            <li>3 producers provide ample calories (8500 total)</li>
+            <li>No apex predators with excessive calorie needs</li>
+            <li>Octopus eats before Crab, leaving Crab with 100 Provided</li>
+            <li>All terrain ranges overlap at 10–25m depth, 20–22°C</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+</body>
+</html>

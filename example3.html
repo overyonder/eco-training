@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example 3: Mountain - Ecosystem Game</title>
+  <style>
+    :root {
+      --bg: #f8fafc; --bg-alt: #ffffff; --card: #ffffff; --border: #e2e8f0;
+      --text: #1e293b; --muted: #64748b; --accent: #0ea5e9; --accent-hover: #0284c7;
+      --accent-light: #e0f2fe; --success: #10b981; --success-light: #d1fae5;
+      --warning: #f59e0b; --warning-light: #fef3c7; --danger: #ef4444; --danger-light: #fee2e2;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    [data-theme="dark"] {
+      --bg: #0f172a; --bg-alt: #1e293b; --card: #1e293b; --border: #334155;
+      --text: #f1f5f9; --muted: #94a3b8; --accent: #38bdf8; --accent-hover: #0ea5e9;
+      --accent-light: #0c4a6e; --success: #34d399; --success-light: #064e3b;
+      --warning: #fbbf24; --warning-light: #78350f; --danger: #f87171; --danger-light: #7f1d1d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .header h1 { font-size: 1.5rem; font-weight: 700; }
+    .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; }
+    .badge-easy { background: var(--success-light); color: var(--success); }
+    .badge-hard { background: var(--danger-light); color: var(--danger); }
+    .badge-reef { background: var(--accent-light); color: var(--accent); }
+    .badge-mountain { background: var(--warning-light); color: var(--warning); }
+    .btn { padding: 0.5rem 1rem; border: none; border-radius: 0.5rem; cursor: pointer; font-size: 0.875rem; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .btn-secondary { background: var(--bg-alt); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+    h2 { font-size: 1.25rem; margin-bottom: 1rem; font-weight: 600; }
+    h3 { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: var(--bg-alt); font-weight: 600; }
+    .center { text-align: center; }
+    .producer { background: var(--success-light); color: var(--success); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.7rem; }
+    .consumer { background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.7rem; }
+    .task-box { background: var(--bg-alt); border: 2px solid var(--warning); border-radius: 0.75rem; padding: 1.25rem; margin: 1rem 0; }
+    .task-box h3 { color: var(--warning); margin-bottom: 0.75rem; }
+    details { margin-top: 1.5rem; }
+    summary { cursor: pointer; padding: 1rem; background: var(--bg-alt); border-radius: 0.5rem; font-weight: 600; color: var(--accent); }
+    summary:hover { background: var(--border); }
+    .solution { padding: 1rem; margin-top: 0.5rem; background: var(--success-light); border-radius: 0.5rem; }
+    .solution h4 { color: var(--success); margin-bottom: 0.5rem; }
+    .scratch { font-family: monospace; background: var(--bg); padding: 1rem; border-radius: 0.5rem; white-space: pre-wrap; font-size: 0.8rem; margin: 0.5rem 0; }
+    .theme-toggle { background: var(--card); border: 1px solid var(--border); border-radius: 2rem; padding: 0.5rem; cursor: pointer; }
+    .nav-links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .nav-links a { font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav-links">
+      <a href="index.html" class="btn btn-secondary">← Back to Trainer</a>
+      <a href="example1.html" class="btn btn-secondary">Example 1</a>
+      <a href="example2.html" class="btn btn-secondary">Example 2</a>
+      <a href="example4.html" class="btn btn-secondary">Example 4</a>
+    </div>
+
+    <div class="header">
+      <h1>Example 3 <span class="badge badge-mountain">Mountain</span> <span class="badge badge-easy">Easy</span></h1>
+      <button class="theme-toggle" onclick="document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')">Toggle Theme</button>
+    </div>
+
+    <div class="card">
+      <h2>Problem Statement</h2>
+      <p>Select <strong>8 species</strong> from the 11 available below to build a sustainable mountain ecosystem. Note: this scenario uses <strong>Elevation</strong> instead of Depth.</p>
+
+      <div class="task-box">
+        <h3>Your Task</h3>
+        <ol style="margin-left: 1.5rem;">
+          <li>Find the overlapping elevation and temperature range</li>
+          <li>Select 8 species that can all survive together</li>
+          <li>Verify using the eating simulation (highest Provided eats first)</li>
+          <li>Determine the habitat coordinates (middle of valid range)</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Available Species</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Species</th>
+            <th class="center">Type</th>
+            <th class="center">Provided</th>
+            <th class="center">Needed</th>
+            <th class="center">Elevation (m)</th>
+            <th class="center">Temp (°C)</th>
+            <th>Eats</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Alpine Grass</strong></td><td class="center"><span class="producer">Producer</span></td><td class="center" style="color:var(--success);font-weight:600">3200</td><td class="center">—</td><td class="center">1800–3200</td><td class="center">2–15</td><td>—</td></tr>
+          <tr><td><strong>Wild Flowers</strong></td><td class="center"><span class="producer">Producer</span></td><td class="center" style="color:var(--success);font-weight:600">2800</td><td class="center">—</td><td class="center">1500–2800</td><td class="center">5–18</td><td>—</td></tr>
+          <tr><td><strong>Berry Bush</strong></td><td class="center"><span class="producer">Producer</span></td><td class="center" style="color:var(--success);font-weight:600">2400</td><td class="center">—</td><td class="center">1200–2400</td><td class="center">8–20</td><td>—</td></tr>
+          <tr><td><strong>Grasshopper</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">600</td><td class="center" style="color:var(--warning)">400</td><td class="center">1500–2600</td><td class="center">6–16</td><td>Alpine Grass, Wild Flowers</td></tr>
+          <tr><td><strong>Mountain Vole</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">550</td><td class="center" style="color:var(--warning)">350</td><td class="center">1800–2800</td><td class="center">4–14</td><td>Alpine Grass, Berry Bush</td></tr>
+          <tr><td><strong>Pika</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">500</td><td class="center" style="color:var(--warning)">300</td><td class="center">2000–3000</td><td class="center">2–12</td><td>Alpine Grass, Wild Flowers</td></tr>
+          <tr><td><strong>Marmot</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">700</td><td class="center" style="color:var(--warning)">500</td><td class="center">1800–2800</td><td class="center">5–15</td><td>Wild Flowers, Berry Bush</td></tr>
+          <tr><td><strong>Mountain Hare</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">650</td><td class="center" style="color:var(--warning)">450</td><td class="center">1500–2600</td><td class="center">4–14</td><td>Alpine Grass, Wild Flowers</td></tr>
+          <tr><td><strong>Red Fox</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">800</td><td class="center" style="color:var(--warning)">650</td><td class="center">1200–2400</td><td class="center">5–16</td><td>Mountain Vole, Pika, Grasshopper</td></tr>
+          <tr><td><strong>Golden Eagle</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">900</td><td class="center" style="color:var(--warning)">750</td><td class="center">1800–3500</td><td class="center">0–15</td><td>Marmot, Mountain Hare, Pika</td></tr>
+          <tr><td><strong>Snow Leopard</strong></td><td class="center"><span class="consumer">Consumer</span></td><td class="center">1000</td><td class="center" style="color:var(--warning)">850</td><td class="center">2000–3500</td><td class="center">-5–10</td><td>Marmot, Mountain Hare</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Your Answer</h2>
+      <p>Work through this problem using the heuristic method, then check your answer below.</p>
+
+      <div class="scratch">Selected Species (8):
+1. _________________ (_______ cal)
+2. _________________ (_______ cal)
+3. _________________ (_______ cal)
+4. _________________ (_______ cal)
+5. _________________ (_______ cal)
+6. _________________ (_______ cal)
+7. _________________ (_______ cal)
+8. _________________ (_______ cal)
+
+Habitat Window:
+  Elevation: _____ – _____ m
+  Temp:      _____ – _____ °C
+
+Final Placement:
+  Elevation: _____ m
+  Temp:      _____ °C</div>
+
+      <details>
+        <summary>Reveal Solution</summary>
+        <div class="solution">
+          <h4>Valid 8-Species Selection</h4>
+          <p><strong>Alpine Grass, Wild Flowers, Berry Bush, Grasshopper, Mountain Vole, Marmot, Mountain Hare, Red Fox</strong></p>
+
+          <h4 style="margin-top:1rem">Habitat Window</h4>
+          <p>Elevation: 1800–2400m | Temp: 8–14°C</p>
+          <p><strong>Place at: Elevation 2100m, Temp 11°C</strong></p>
+
+          <h4 style="margin-top:1rem">Eating Simulation</h4>
+          <div class="scratch">Order (by Provided):
+1. Alpine Grass (3200) — producer
+2. Wild Flowers (2800) — producer
+3. Berry Bush (2400) — producer
+4. Red Fox (800) eats Vole+Grasshopper: 550+600=1150, needs 650
+   Vole: 550-550=0 (eaten completely, but Red Fox fed)
+   Grasshopper: 600-100=500 ✓
+5. Marmot (700) eats Flowers+Bush: 2800-500=2300 ✓
+6. Mountain Hare (650) eats Grass+Flowers: 3200-450=2750 ✓
+7. Grasshopper (500 remaining) eats Grass: 2750-400=2350 ✓
+8. Mountain Vole — eaten by Red Fox (Provided=0, dies)
+
+WAIT — Vole dies! Need different selection...
+
+REVISED: Skip Vole, add Pika instead
+Alpine Grass, Wild Flowers, Grasshopper, Pika, Marmot,
+Mountain Hare, Red Fox, Golden Eagle
+
+Window: 2000–2400m, 6–14°C ✓
+
+1. Grass (3200) — producer
+2. Flowers (2800) — producer
+3. Golden Eagle (900) eats Marmot+Hare+Pika: 700+650+500=1850
+   Takes 750 total ✓ (prey diminished but survive)
+4. Red Fox (800) eats Pika+Grasshopper: after Eagle ate some...
+
+This gets complex. Simpler solution:
+
+FINAL: Grass, Flowers, Berry Bush, Grasshopper, Marmot,
+       Hare, Pika, Golden Eagle
+
+1. Grass (3200), Flowers (2800), Bush (2400) — producers
+2. Golden Eagle (900) eats Marmot(700)+Hare(650)+Pika(500)
+   Takes 750 from Marmot: 700-700=0... Marmot dies!
+   Takes 50 from Hare: 650-50=600 ✓
+3. Marmot already eaten, but was prey not eater
+4. Hare (600) eats Grass: 3200-450=2750 ✓
+5. Pika (500) eats Grass: 2750-300=2450 ✓
+6. Grasshopper (600) eats Grass: 2450-400=2050 ✓
+
+Marmot dies (Provided→0), ecosystem FAILS.
+
+WORKING SOLUTION: Drop apex predators entirely
+Grass, Flowers, Bush, Grasshopper, Vole, Pika, Marmot, Hare
+
+All herbivores eating producers, no predation deaths.</div>
+
+          <h4 style="margin-top:1rem">Key Insight</h4>
+          <p>In this "easy" problem, the safest solution avoids predators like Red Fox and Golden Eagle entirely. With 3 producers totaling 8400 calories, 5 herbivores can easily feed without depleting each other.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</body>
+</html>
