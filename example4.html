@@ -42,18 +42,49 @@
     .consumer { background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.7rem; }
     .task-box { background: var(--bg-alt); border: 2px solid var(--danger); border-radius: 0.75rem; padding: 1.25rem; margin: 1rem 0; }
     .task-box h3 { color: var(--danger); margin-bottom: 0.75rem; }
-    .hint { background: var(--warning-light); border-left: 3px solid var(--warning); padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; font-size: 0.9rem; }
-    details { margin-top: 1.5rem; }
-    summary { cursor: pointer; padding: 1rem; background: var(--bg-alt); border-radius: 0.5rem; font-weight: 600; color: var(--accent); }
-    summary:hover { background: var(--border); }
-    .solution { padding: 1rem; margin-top: 0.5rem; background: var(--success-light); border-radius: 0.5rem; }
-    .solution h4 { color: var(--success); margin-bottom: 0.5rem; }
+    h4 { font-size: 0.9rem; margin: 1rem 0 0.5rem; font-weight: 600; color: var(--accent); }
+    details { margin-top: 1rem; }
+    summary { cursor: pointer; padding: 0.75rem 1rem; background: var(--bg-alt); border-radius: 0.5rem; font-weight: 500; color: var(--muted); list-style: none; display: flex; align-items: center; gap: 0.5rem; }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '▶'; font-size: 0.7rem; transition: transform 0.2s; }
+    details[open] summary::before { transform: rotate(90deg); }
+    summary:hover { background: var(--border); color: var(--text); }
+    details.hint summary { color: var(--warning); }
+    details.trap summary { color: var(--danger); }
+    details.solution summary { color: var(--accent); font-weight: 600; }
+    .hint-content { padding: 1rem; margin-top: 0.5rem; background: var(--warning-light); border-left: 3px solid var(--warning); border-radius: 0 0.5rem 0.5rem 0; }
+    .trap-content { padding: 1rem; margin-top: 0.5rem; background: var(--danger-light); border-left: 3px solid var(--danger); border-radius: 0 0.5rem 0.5rem 0; }
+    .trap-content strong { color: var(--danger); }
+    .solution-content { padding: 1rem; margin-top: 0.5rem; background: var(--success-light); border-radius: 0.5rem; }
+    .solution-content h4 { color: var(--success); }
     .scratch { font-family: monospace; background: var(--bg); padding: 1rem; border-radius: 0.5rem; white-space: pre-wrap; font-size: 0.8rem; margin: 0.5rem 0; }
     .theme-toggle { background: var(--card); border: 1px solid var(--border); border-radius: 2rem; padding: 0.5rem; cursor: pointer; }
     .nav-links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
     .nav-links a { font-size: 0.8rem; }
-    .trap { background: var(--danger-light); border-left: 3px solid var(--danger); padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
-    .trap strong { color: var(--danger); }
+
+    /* Form styles */
+    .worksheet { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; }
+    .worksheet h4 { color: var(--text); margin-top: 0; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
+    .form-grid { display: grid; grid-template-columns: auto 1fr 1fr; gap: 0.5rem; align-items: center; margin: 0.75rem 0; }
+    .form-grid label { font-size: 0.85rem; font-weight: 500; }
+    .form-grid input { padding: 0.375rem 0.5rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.85rem; background: var(--card); color: var(--text); width: 100%; }
+    .species-table { width: 100%; margin: 0.75rem 0; }
+    .species-table th, .species-table td { padding: 0.375rem 0.5rem; font-size: 0.8rem; }
+    .species-table input { padding: 0.25rem 0.375rem; border: 1px solid var(--border); border-radius: 0.25rem; font-size: 0.8rem; background: var(--card); color: var(--text); width: 100%; }
+    .species-table input[type="text"] { min-width: 80px; }
+    .species-table input[type="number"] { width: 60px; }
+    .sim-table { width: 100%; margin: 0.75rem 0; }
+    .sim-table th, .sim-table td { padding: 0.375rem 0.5rem; font-size: 0.8rem; }
+    .sim-table input { padding: 0.25rem 0.375rem; border: 1px solid var(--border); border-radius: 0.25rem; font-size: 0.8rem; background: var(--card); color: var(--text); }
+    .sim-table .calc { display: flex; align-items: center; gap: 0.25rem; }
+    .sim-table .calc input { width: 50px; text-align: center; }
+    .sim-table .calc span { color: var(--muted); }
+    .check-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; font-size: 0.85rem; }
+    .check-row input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
+    .final-placement { display: grid; grid-template-columns: auto 1fr auto; gap: 0.5rem; align-items: center; margin: 0.75rem 0; max-width: 300px; }
+    .final-placement label { font-size: 0.85rem; }
+    .final-placement input { padding: 0.375rem 0.5rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.85rem; background: var(--card); color: var(--text); width: 80px; text-align: center; }
+    .final-placement span { font-size: 0.85rem; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -79,9 +110,12 @@
         <p>The producers have non-overlapping elevation ranges. You must choose which elevation band to target, then build a food chain that works within that narrow window. Multiple predators compete for limited prey.</p>
       </div>
 
-      <div class="hint">
-        <strong>Hint:</strong> Check elevation overlaps FIRST. Some producer combinations are impossible. The Wolf and Mountain Lion cannot both survive — pick one or neither.
-      </div>
+      <details class="hint">
+        <summary>Show Hint</summary>
+        <div class="hint-content">
+          Check elevation overlaps FIRST. Some producer combinations are impossible. The Wolf and Mountain Lion cannot both survive — pick one or neither.
+        </div>
+      </details>
     </div>
 
     <div class="card">
@@ -121,95 +155,128 @@
     <div class="card">
       <h2>Critical Constraints</h2>
 
-      <div class="trap">
-        <strong>Elevation Conflict:</strong> Tundra Moss (2500–3500m) doesn't overlap with Spruce Forest (1200–2200m). You cannot use both producers.
-      </div>
+      <details class="trap">
+        <summary>Trap: Elevation Conflict</summary>
+        <div class="trap-content">
+          <strong>Elevation Conflict:</strong> Tundra Moss (2500–3500m) doesn't overlap with Spruce Forest (1200–2200m). You cannot use both producers.
+        </div>
+      </details>
 
-      <div class="trap">
-        <strong>Wolf vs Mountain Lion:</strong> Wolf needs 1100 cal, Mountain Lion needs 1000. Their prey overlaps. If Wolf eats first (1300 Provided > 1200), it may consume Elk (1100) leaving Mountain Lion without enough food.
-      </div>
+      <details class="trap">
+        <summary>Trap: Wolf vs Mountain Lion</summary>
+        <div class="trap-content">
+          <strong>Wolf vs Mountain Lion:</strong> Wolf needs 1100 cal, Mountain Lion needs 1000. Their prey overlaps. If Wolf eats first (1300 Provided > 1200), it may consume Elk (1100) leaving Mountain Lion without enough food.
+        </div>
+      </details>
 
-      <div class="trap">
-        <strong>High-altitude chain:</strong> If you choose Tundra Moss zone (2500+ m), your only herbivores are Lemming, Pika, Mountain Goat, and Ptarmigan. That's only 4 consumers — you need 5 more species but options are limited.
-      </div>
+      <details class="trap">
+        <summary>Trap: High-altitude chain</summary>
+        <div class="trap-content">
+          <strong>High-altitude chain:</strong> If you choose Tundra Moss zone (2500+ m), your only herbivores are Lemming, Pika, Mountain Goat, and Ptarmigan. That's only 4 consumers — you need 5 more species but options are limited.
+        </div>
+      </details>
     </div>
 
     <div class="card">
-      <h2>Your Answer</h2>
-      <div class="scratch">Selected Species (8):
-1. _________________ (_______ cal)
-2. _________________ (_______ cal)
-3. _________________ (_______ cal)
-4. _________________ (_______ cal)
-5. _________________ (_______ cal)
-6. _________________ (_______ cal)
-7. _________________ (_______ cal)
-8. _________________ (_______ cal)
+      <h2>Your Worksheet</h2>
 
-Habitat Window:
-  Elevation: _____ – _____ m
-  Temp:      _____ – _____ °C
+      <div class="worksheet">
+        <h4>Habitat Window</h4>
+        <div class="form-grid">
+          <label>Elevation (m)</label>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+          <label>Temp (°C)</label>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+        </div>
+      </div>
 
-Final Placement:
-  Elevation: _____ m
-  Temp:      _____ °C</div>
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Selected Species (sorted by Calories Provided — highest first)</h4>
+        <table class="species-table">
+          <thead>
+            <tr><th>#</th><th>Species Name</th><th>Provided</th><th>Needed</th><th>Eats</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td><input type="text"></td><td><input type="number"></td><td><input type="text" placeholder="(producer)"></td><td><input type="text"></td></tr>
+            <tr><td>2</td><td><input type="text"></td><td><input type="number"></td><td><input type="text" placeholder="(producer)"></td><td><input type="text"></td></tr>
+            <tr><td>3</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>4</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>5</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>6</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>7</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>8</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+          </tbody>
+        </table>
+      </div>
 
-      <details>
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Eating Simulation</h4>
+        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem;">Walk through in order of Calories Provided (highest first):</p>
+        <table class="sim-table">
+          <thead>
+            <tr><th>Eater</th><th>Eats</th><th>Food's Provided − Needed = Remaining</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Survival Check</h4>
+        <div class="check-row"><input type="checkbox" id="check1"><label for="check1">All consumers' Needed met?</label></div>
+        <div class="check-row"><input type="checkbox" id="check2"><label for="check2">All species' Provided > 0?</label></div>
+      </div>
+
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Final Habitat Placement</h4>
+        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem;">Pick middle of each range:</p>
+        <div class="final-placement">
+          <label>Elevation:</label><input type="number"><span>m</span>
+          <label>Temp:</label><input type="number"><span>°C</span>
+        </div>
+      </div>
+
+      <details class="solution" style="margin-top: 1.5rem;">
         <summary>Reveal Solution</summary>
-        <div class="solution">
+        <div class="solution-content">
           <h4>Valid 8-Species Selection</h4>
-          <p><strong>Alpine Sedge, Mountain Willow, Pika, Bighorn Sheep, Marmot, Elk, Red Fox, Golden Eagle</strong></p>
+          <p><strong>Spruce Forest, Alpine Sedge, Tundra Moss, Mountain Willow, Bighorn Sheep, Mountain Goat, Pika, Lemming</strong></p>
 
-          <h4 style="margin-top:1rem">Habitat Window</h4>
-          <p>Elevation: 2200–2400m | Temp: 2–8°C</p>
-          <p><strong>Place at: Elevation 2300m, Temp 5°C</strong></p>
+          <h4>Habitat Window</h4>
+          <p>Elevation: 2500–3000m | Temp: -2–5°C</p>
+          <p><strong>Place at: Elevation 2750m, Temp 2°C</strong></p>
 
-          <h4 style="margin-top:1rem">Why This Selection?</h4>
+          <h4>Why This Selection?</h4>
           <ul style="margin-left:1.5rem;margin-top:0.5rem">
-            <li><strong>Producers:</strong> Alpine Sedge (2200–3000m) + Mountain Willow (1800–2600m) = overlap at 2200–2600m</li>
-            <li><strong>Skip apex predators:</strong> Wolf (1100 needed) and Mountain Lion (1000 needed) are too hungry</li>
-            <li><strong>Mid-tier predators:</strong> Red Fox (550) and Golden Eagle (650) can be sustained</li>
-            <li><strong>Herbivore buffer:</strong> Elk (1100 Provided) gives large prey base</li>
+            <li><strong>4 Producers:</strong> All four producers provide 12,000 total calories — massive buffer</li>
+            <li><strong>No predators:</strong> Wolf (1100), Mountain Lion (1000), Golden Eagle (650), Red Fox (550) — ALL are traps that deplete prey</li>
+            <li><strong>4 Herbivores:</strong> Bighorn Sheep, Mountain Goat, Pika, Lemming all eat directly from producers</li>
+            <li><strong>Simple food chain:</strong> No mid-tier predation means no species gets consumed to 0</li>
           </ul>
 
-          <h4 style="margin-top:1rem">Eating Simulation</h4>
+          <h4>Eating Simulation</h4>
           <div class="scratch">Order (by Provided):
-1. Alpine Sedge (3200) — producer
-2. Mountain Willow (2500) — producer
-3. Elk (1100) eats Willow+Spruce... wait, Spruce not selected!
-   Elk eats Willow: 2500-850=1650 ✓
-4. Bighorn Sheep (950) eats Willow+Sedge: 1650-750=900 ✓
-5. Mountain Goat not selected
-6. Golden Eagle (800) eats Marmot+Ptarmigan+Lemming...
-   Marmot selected, others not. Eats Marmot: 600-650...
-   Needs 650 but Marmot only 600. Need another prey!
+1. Spruce Forest (3500) — producer
+2. Alpine Sedge (3200) — producer
+3. Tundra Moss (2800) — producer
+4. Mountain Willow (2500) — producer
+5. Bighorn Sheep (950) eats Sedge: 3200−750=2450 ✓
+6. Mountain Goat (900) eats Moss: 2800−700=2100 ✓
+7. Pika (500) eats Willow: 2500−350=2150 ✓
+8. Lemming (450) eats Sedge: 2450−300=2150 ✓
 
-REVISED — add Ptarmigan, remove something:
-Alpine Sedge, Mountain Willow, Pika, Marmot, Ptarmigan,
-Bighorn Sheep, Red Fox, Golden Eagle
+All 8 species survive — no predation issues.</div>
 
-Window: 2200–2600m, 0–8°C ✓
-
-1. Sedge (3200) — producer
-2. Willow (2500) — producer
-3. Bighorn (950) eats Willow+Sedge: 2500-750=1750 ✓
-4. Golden Eagle (800) eats Marmot(600)+Ptarmigan(400)+Pika(500)
-   Takes 650 from Marmot+Ptarmigan: 600-500=100, 400-150=250 ✓
-5. Red Fox (700) eats Pika+Ptarmigan: Ptarmigan has 250 left
-   550 needed from Pika(500)+Ptarmigan(250)=750 available ✓
-6. Marmot (100 left) eats Sedge: 3200-450=2750 ✓
-7. Pika (after Fox ate some) eats Sedge+Willow: enough ✓
-8. Ptarmigan (after predation) eats Moss... Moss not selected!
-
-This is getting complex. Use digital solver for verification.
-
-CONFIRMED WORKING (via solver):
-Sedge, Willow, Pika, Marmot, Bighorn, Elk, Red Fox (no Eagle)
-
-Avoids the Golden Eagle prey shortage issue.</div>
-
-          <h4 style="margin-top:1rem">Key Insight</h4>
-          <p>This problem requires targeting the mid-elevation band (2200–2600m) where Alpine Sedge and Mountain Willow overlap. The apex predators (Wolf, Mountain Lion) are traps — their calorie demands exceed sustainable prey. Even Golden Eagle is borderline. The cleanest solution uses only Red Fox as the top predator.</p>
+          <h4>Key Insight</h4>
+          <p>This "hard" problem is actually solved most easily by <strong>avoiding all predators entirely</strong>. The trap is thinking you need predators to complete the food chain. With 4 producers providing 12,000 calories, 4 herbivores (total need: 2100 calories) easily survive. Every predator in this scenario risks killing its prey completely.</p>
         </div>
       </details>
     </div>

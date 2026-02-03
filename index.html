@@ -260,14 +260,14 @@
               <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Giant Kelp</td><td>Producer</td><td>4000</td><td>—</td><td>5-30</td><td>12-20</td><td>—</td></tr>
               <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Sea Grass</td><td>Producer</td><td>2500</td><td>—</td><td>0-25</td><td>15-24</td><td>—</td></tr>
               <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Coral</td><td>Producer</td><td>1800</td><td>—</td><td>5-20</td><td>18-26</td><td>—</td></tr>
-              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Sea Urchin</td><td>Consumer</td><td>600</td><td>800</td><td>5-25</td><td>14-22</td><td>Giant Kelp, Sea Grass</td></tr>
-              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Small Fish</td><td>Consumer</td><td>300</td><td>400</td><td>0-30</td><td>12-24</td><td>Sea Grass, Coral</td></tr>
-              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Crab</td><td>Consumer</td><td>400</td><td>500</td><td>5-20</td><td>14-20</td><td>Giant Kelp, Coral</td></tr>
-              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Lobster</td><td>Consumer</td><td>350</td><td>400</td><td>10-30</td><td>12-18</td><td>Sea Urchin, Small Fish</td></tr>
-              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Octopus</td><td>Consumer</td><td>500</td><td>600</td><td>5-35</td><td>14-22</td><td>Crab, Lobster</td></tr>
-              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Sea Bass</td><td>Consumer</td><td>450</td><td>550</td><td>10-40</td><td>12-20</td><td>Small Fish, Crab</td></tr>
-              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Barracuda</td><td>Consumer</td><td>550</td><td>700</td><td>5-30</td><td>16-24</td><td>Sea Bass, Small Fish</td></tr>
-              <tr><td style="padding: 0.5rem;">Shark</td><td>Consumer</td><td>700</td><td>900</td><td>10-50</td><td>14-22</td><td>Sea Bass, Octopus, Barracuda</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Sea Urchin</td><td>Consumer</td><td>800</td><td>600</td><td>5-25</td><td>14-22</td><td>Giant Kelp, Sea Grass</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Small Fish</td><td>Consumer</td><td>500</td><td>350</td><td>0-30</td><td>12-24</td><td>Sea Grass, Coral</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Crab</td><td>Consumer</td><td>700</td><td>450</td><td>5-20</td><td>14-20</td><td>Giant Kelp, Coral</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Lobster</td><td>Consumer</td><td>600</td><td>400</td><td>10-30</td><td>12-18</td><td>Sea Urchin, Small Fish</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Octopus</td><td>Consumer</td><td>750</td><td>500</td><td>5-35</td><td>14-22</td><td>Crab, Lobster</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Sea Bass</td><td>Consumer</td><td>650</td><td>450</td><td>10-40</td><td>12-20</td><td>Small Fish, Crab</td></tr>
+              <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem;">Barracuda</td><td>Consumer</td><td>550</td><td>600</td><td>5-30</td><td>16-24</td><td>Sea Bass, Small Fish</td></tr>
+              <tr><td style="padding: 0.5rem;">Shark</td><td>Consumer</td><td>700</td><td>800</td><td>10-50</td><td>14-22</td><td>Sea Bass, Octopus, Barracuda</td></tr>
             </tbody>
           </table>
         </div>
@@ -341,11 +341,11 @@
           <p style="margin-bottom: 1rem;">The worked solution below uses this example dataset (also the default in the Digital Solver). Your goal: select 8 species that form a sustainable ecosystem.</p>
           <div id="example-table-container" style="overflow-x: auto;"></div>
         </div>
+      </div>
 
-        <div class="card">
-          <h2>Worked Solution</h2>
-          <div id="worked-solution-container"></div>
-        </div>
+      <div class="card">
+        <h2>Worked Solution</h2>
+        <div id="worked-solution-container"></div>
       </div>
 
       <div class="card">
@@ -572,32 +572,32 @@ SURVIVAL CHECK:
       document.getElementById('species-count').textContent = `${species.length} species entered`;
     }
 
-    // Example data for both scenarios
+    // Example data for both scenarios - values adjusted to have valid 8-species solutions
     const exampleData = {
       reef: [
         { name: 'Giant Kelp', type: 'producer', depthMin: 5, depthMax: 30, tempMin: 12, tempMax: 20, caloriesNeeded: 0, caloriesProvided: 4000, foodSources: '' },
         { name: 'Sea Grass', type: 'producer', depthMin: 0, depthMax: 25, tempMin: 15, tempMax: 24, caloriesNeeded: 0, caloriesProvided: 2500, foodSources: '' },
         { name: 'Coral', type: 'producer', depthMin: 5, depthMax: 20, tempMin: 18, tempMax: 26, caloriesNeeded: 0, caloriesProvided: 1800, foodSources: '' },
-        { name: 'Sea Urchin', type: 'wildlife', depthMin: 5, depthMax: 25, tempMin: 14, tempMax: 22, caloriesNeeded: 800, caloriesProvided: 600, foodSources: 'Giant Kelp, Sea Grass' },
-        { name: 'Small Fish', type: 'wildlife', depthMin: 0, depthMax: 30, tempMin: 12, tempMax: 24, caloriesNeeded: 400, caloriesProvided: 300, foodSources: 'Sea Grass, Coral' },
-        { name: 'Crab', type: 'wildlife', depthMin: 5, depthMax: 20, tempMin: 14, tempMax: 20, caloriesNeeded: 500, caloriesProvided: 400, foodSources: 'Giant Kelp, Coral' },
-        { name: 'Lobster', type: 'wildlife', depthMin: 10, depthMax: 30, tempMin: 12, tempMax: 18, caloriesNeeded: 400, caloriesProvided: 350, foodSources: 'Sea Urchin, Small Fish' },
-        { name: 'Octopus', type: 'wildlife', depthMin: 5, depthMax: 35, tempMin: 14, tempMax: 22, caloriesNeeded: 600, caloriesProvided: 500, foodSources: 'Crab, Lobster' },
-        { name: 'Sea Bass', type: 'wildlife', depthMin: 10, depthMax: 40, tempMin: 12, tempMax: 20, caloriesNeeded: 550, caloriesProvided: 450, foodSources: 'Small Fish, Crab' },
-        { name: 'Barracuda', type: 'wildlife', depthMin: 5, depthMax: 30, tempMin: 16, tempMax: 24, caloriesNeeded: 700, caloriesProvided: 550, foodSources: 'Sea Bass, Small Fish' },
-        { name: 'Shark', type: 'wildlife', depthMin: 10, depthMax: 50, tempMin: 14, tempMax: 22, caloriesNeeded: 900, caloriesProvided: 700, foodSources: 'Sea Bass, Octopus, Barracuda' },
+        { name: 'Sea Urchin', type: 'wildlife', depthMin: 5, depthMax: 25, tempMin: 14, tempMax: 22, caloriesNeeded: 600, caloriesProvided: 800, foodSources: 'Giant Kelp, Sea Grass' },
+        { name: 'Small Fish', type: 'wildlife', depthMin: 0, depthMax: 30, tempMin: 12, tempMax: 24, caloriesNeeded: 350, caloriesProvided: 500, foodSources: 'Sea Grass, Coral' },
+        { name: 'Crab', type: 'wildlife', depthMin: 5, depthMax: 20, tempMin: 14, tempMax: 20, caloriesNeeded: 450, caloriesProvided: 700, foodSources: 'Giant Kelp, Coral' },
+        { name: 'Lobster', type: 'wildlife', depthMin: 10, depthMax: 30, tempMin: 12, tempMax: 18, caloriesNeeded: 400, caloriesProvided: 600, foodSources: 'Sea Urchin, Small Fish' },
+        { name: 'Octopus', type: 'wildlife', depthMin: 5, depthMax: 35, tempMin: 14, tempMax: 22, caloriesNeeded: 500, caloriesProvided: 750, foodSources: 'Crab, Lobster' },
+        { name: 'Sea Bass', type: 'wildlife', depthMin: 10, depthMax: 40, tempMin: 12, tempMax: 20, caloriesNeeded: 450, caloriesProvided: 650, foodSources: 'Small Fish, Crab' },
+        { name: 'Barracuda', type: 'wildlife', depthMin: 5, depthMax: 30, tempMin: 16, tempMax: 24, caloriesNeeded: 600, caloriesProvided: 550, foodSources: 'Sea Bass, Small Fish' },
+        { name: 'Shark', type: 'wildlife', depthMin: 10, depthMax: 50, tempMin: 14, tempMax: 22, caloriesNeeded: 800, caloriesProvided: 700, foodSources: 'Sea Bass, Octopus, Barracuda' },
       ],
       mountain: [
         { name: 'Alpine Grass', type: 'producer', depthMin: 1500, depthMax: 3000, tempMin: 5, tempMax: 18, caloriesNeeded: 0, caloriesProvided: 3500, foodSources: '' },
         { name: 'Mountain Shrub', type: 'producer', depthMin: 1200, depthMax: 2500, tempMin: 8, tempMax: 20, caloriesNeeded: 0, caloriesProvided: 2800, foodSources: '' },
         { name: 'Pine Tree', type: 'producer', depthMin: 1000, depthMax: 2200, tempMin: 5, tempMax: 15, caloriesNeeded: 0, caloriesProvided: 2000, foodSources: '' },
-        { name: 'Mountain Hare', type: 'wildlife', depthMin: 1500, depthMax: 2800, tempMin: 4, tempMax: 16, caloriesNeeded: 600, caloriesProvided: 500, foodSources: 'Alpine Grass, Mountain Shrub' },
-        { name: 'Marmot', type: 'wildlife', depthMin: 1800, depthMax: 3000, tempMin: 2, tempMax: 14, caloriesNeeded: 500, caloriesProvided: 400, foodSources: 'Alpine Grass' },
-        { name: 'Mountain Goat', type: 'wildlife', depthMin: 2000, depthMax: 3500, tempMin: 0, tempMax: 12, caloriesNeeded: 800, caloriesProvided: 650, foodSources: 'Alpine Grass, Mountain Shrub' },
-        { name: 'Red Fox', type: 'wildlife', depthMin: 1200, depthMax: 2600, tempMin: 5, tempMax: 18, caloriesNeeded: 550, caloriesProvided: 450, foodSources: 'Mountain Hare, Marmot' },
-        { name: 'Golden Eagle', type: 'wildlife', depthMin: 1500, depthMax: 3500, tempMin: 2, tempMax: 16, caloriesNeeded: 700, caloriesProvided: 550, foodSources: 'Mountain Hare, Marmot' },
-        { name: 'Snow Leopard', type: 'wildlife', depthMin: 2000, depthMax: 3500, tempMin: -5, tempMax: 10, caloriesNeeded: 850, caloriesProvided: 700, foodSources: 'Mountain Goat, Mountain Hare' },
-        { name: 'Wolf', type: 'wildlife', depthMin: 1500, depthMax: 3000, tempMin: 0, tempMax: 15, caloriesNeeded: 900, caloriesProvided: 750, foodSources: 'Mountain Goat, Red Fox, Marmot' },
+        { name: 'Mountain Hare', type: 'wildlife', depthMin: 1500, depthMax: 2800, tempMin: 4, tempMax: 16, caloriesNeeded: 500, caloriesProvided: 700, foodSources: 'Alpine Grass, Mountain Shrub' },
+        { name: 'Marmot', type: 'wildlife', depthMin: 1800, depthMax: 3000, tempMin: 2, tempMax: 14, caloriesNeeded: 400, caloriesProvided: 600, foodSources: 'Alpine Grass' },
+        { name: 'Mountain Goat', type: 'wildlife', depthMin: 2000, depthMax: 3500, tempMin: 0, tempMax: 12, caloriesNeeded: 650, caloriesProvided: 800, foodSources: 'Alpine Grass, Mountain Shrub' },
+        { name: 'Red Fox', type: 'wildlife', depthMin: 1200, depthMax: 2600, tempMin: 5, tempMax: 18, caloriesNeeded: 450, caloriesProvided: 550, foodSources: 'Mountain Hare, Marmot' },
+        { name: 'Golden Eagle', type: 'wildlife', depthMin: 1500, depthMax: 3500, tempMin: 2, tempMax: 16, caloriesNeeded: 500, caloriesProvided: 650, foodSources: 'Mountain Hare, Marmot' },
+        { name: 'Snow Leopard', type: 'wildlife', depthMin: 2000, depthMax: 3500, tempMin: -5, tempMax: 10, caloriesNeeded: 700, caloriesProvided: 750, foodSources: 'Mountain Goat, Mountain Hare' },
+        { name: 'Wolf', type: 'wildlife', depthMin: 1500, depthMax: 3000, tempMin: 0, tempMax: 15, caloriesNeeded: 750, caloriesProvided: 850, foodSources: 'Mountain Goat, Red Fox, Marmot' },
       ]
     };
 
@@ -827,46 +827,45 @@ SURVIVAL CHECK:
         </div>
         <div class="example">
           <div class="example-title">Step 2: Set Habitat Window</div>
-          Starting with Giant Kelp + Sea Grass (highest calorie producers):<br>
-          <div class="scratch-pad">WINDOW: ${Dim} 5-25${unit} (intersection), Temp 15-20°C (intersection)
-SELECTED: Giant Kelp (4000), Sea Grass (2500)
-TOTAL PROVIDED: 6500</div>
+          Starting with Giant Kelp + Sea Grass + Coral (all 3 producers):<br>
+          <div class="scratch-pad">WINDOW: ${Dim} 5-20${unit} (intersection), Temp 18-20°C (intersection)
+SELECTED: Giant Kelp (4000), Sea Grass (2500), Coral (1800)
+TOTAL PROVIDED: 8300</div>
         </div>
         <div class="example">
           <div class="example-title">Step 3: Build Food Chain</div>
           Select consumers that: (a) fit window, (b) have food sources in selection<br>
-          <strong>Sea Urchin</strong>: 600 provided, 800 needed, eats Kelp/Grass ✓<br>
-          <strong>Small Fish</strong>: 300 provided, 400 needed, eats Grass/Coral ✓<br>
-          <strong>Crab</strong>: 400 provided, 500 needed, eats Kelp/Coral ✓<br>
-          <strong>Lobster</strong>: 350 provided, 400 needed, eats Urchin/Fish ✓<br><br>
-          Add Coral (1800) to fit window constraints. Now have 7 species.
+          <strong>Sea Urchin</strong>: 800 provided, 600 needed, eats Kelp/Grass ✓<br>
+          <strong>Octopus</strong>: 750 provided, 500 needed, eats Crab/Lobster ✓<br>
+          <strong>Crab</strong>: 700 provided, 450 needed, eats Kelp/Coral ✓<br>
+          <strong>Lobster</strong>: 600 provided, 400 needed, eats Urchin/Fish ✓<br>
+          <strong>Small Fish</strong>: 500 provided, 350 needed, eats Grass/Coral ✓
         </div>
         <div class="example warning">
-          <div class="example-title">Step 4: Apex Predator Problem</div>
-          <strong>Shark</strong> needs 900 cal but no single prey provides enough.<br>
-          <strong>Barracuda</strong> needs 700 but Sea Bass only provides 450.<br><br>
-          <strong>Solution:</strong> Skip high-demand apex predators. Add mid-tier:<br>
-          • <strong>Octopus</strong>: 500 provided, 600 needed, eats Crab + Lobster (combined: 750) ✓
+          <div class="example-title">Step 4: Apex Predator Check</div>
+          <strong>Shark</strong> needs 800 cal — too risky with our selection.<br>
+          <strong>Barracuda</strong> needs 600 — would consume too much of Sea Bass/Small Fish.<br><br>
+          <strong>Decision:</strong> Stop at 8 species (3 producers + 5 consumers). No apex predators.
         </div>
         <div class="example success">
           <div class="example-title">Step 5: Verify with Simulation</div>
-          Final 8: Giant Kelp, Sea Grass, Coral, Sea Urchin, Small Fish, Crab, Lobster, Octopus<br><br>
+          Final 8: Giant Kelp, Sea Grass, Coral, Sea Urchin, Octopus, Crab, Lobster, Small Fish<br><br>
           <div class="scratch-pad">Eating order (by Provided):
-1. Kelp (4000) — producer
+1. Giant Kelp (4000) — producer
 2. Sea Grass (2500) — producer
 3. Coral (1800) — producer
-4. Sea Urchin (600) eats Kelp: 4000-800=3200 ✓
-5. Octopus (500) eats Crab+Lobster: 400+350-600=150 remaining ✓
-6. Crab (400-?) eats Kelp: 3200-500=2700 ✓
-7. Lobster (350-?) eats Urchin: 600-400=200 ✓
-8. Small Fish (300) eats Grass: 2500-400=2100 ✓
+4. Sea Urchin (800) eats Kelp: 4000−600=3400 ✓
+5. Octopus (750) eats Crab: 700−500=200 remaining ✓
+6. Crab (700→200) eats Kelp: 3400−450=2950 ✓
+7. Lobster (600) eats Urchin: 800−400=400 ✓
+8. Small Fish (500) eats Grass: 2500−350=2150 ✓
 
-All survive → VALID</div>
+All 8 species survive → VALID</div>
         </div>
         <div class="example">
           <div class="example-title">Step 6: Place Habitat</div>
-          Final window: ${Dim} 10-20${unit}, Temp 15-18°C<br>
-          <strong>Place at:</strong> ${Dim} 15${unit}, Temp 16°C (middle values)
+          Final window: ${Dim} 10-20${unit}, Temp 18-20°C<br>
+          <strong>Place at:</strong> ${Dim} 15${unit}, Temp 19°C (middle values)
         </div>
       ` : `
         <div class="example">
@@ -879,47 +878,45 @@ All survive → VALID</div>
         </div>
         <div class="example">
           <div class="example-title">Step 2: Set Habitat Window</div>
-          Starting with Alpine Grass + Mountain Shrub:<br>
-          <div class="scratch-pad">WINDOW: ${Dim} 1500-2500${unit} (intersection), Temp 8-18°C (intersection)
-SELECTED: Alpine Grass (3500), Mountain Shrub (2800)
-TOTAL PROVIDED: 6300</div>
+          Starting with all 3 producers:<br>
+          <div class="scratch-pad">WINDOW: ${Dim} 1500-2200${unit} (intersection), Temp 8-15°C (intersection)
+SELECTED: Alpine Grass (3500), Mountain Shrub (2800), Pine Tree (2000)
+TOTAL PROVIDED: 8300</div>
         </div>
         <div class="example">
           <div class="example-title">Step 3: Build Food Chain</div>
           Select consumers that: (a) fit window, (b) have food sources in selection<br>
-          <strong>Mountain Hare</strong>: 500 provided, 600 needed, eats Grass/Shrub ✓<br>
-          <strong>Marmot</strong>: 400 provided, 500 needed, eats Grass ✓<br>
-          <strong>Red Fox</strong>: 450 provided, 550 needed, eats Hare/Marmot ✓<br>
-          <strong>Golden Eagle</strong>: 550 provided, 700 needed, eats Hare/Marmot ✓<br><br>
-          Need 2 more species to reach 8.
+          <strong>Mountain Goat</strong>: 800 provided, 650 needed, eats Grass/Shrub ✓<br>
+          <strong>Mountain Hare</strong>: 700 provided, 500 needed, eats Grass/Shrub ✓<br>
+          <strong>Golden Eagle</strong>: 650 provided, 500 needed, eats Hare/Marmot ✓<br>
+          <strong>Marmot</strong>: 600 provided, 400 needed, eats Grass ✓<br>
+          <strong>Red Fox</strong>: 550 provided, 450 needed, eats Hare/Marmot ✓
         </div>
         <div class="example warning">
-          <div class="example-title">Step 4: Apex Predator Problem</div>
-          <strong>Wolf</strong> needs 900 cal — too hungry for our prey.<br>
-          <strong>Snow Leopard</strong> needs 850 and eats Mountain Goat (not in window).<br><br>
-          <strong>Solution:</strong> Add Pine Tree (2000) + Mountain Goat if we can fit it.<br>
-          Mountain Goat: ${dim} 2000-3500${unit} → narrows window to 2000-2500${unit}.
+          <div class="example-title">Step 4: Apex Predator Check</div>
+          <strong>Wolf</strong> needs 750 cal — risky, would deplete prey.<br>
+          <strong>Snow Leopard</strong> needs 700 — same concern.<br><br>
+          <strong>Decision:</strong> Stop at 8 species (3 producers + 5 consumers). Avoid apex predators.
         </div>
         <div class="example success">
           <div class="example-title">Step 5: Verify with Simulation</div>
-          Final 8: Alpine Grass, Mountain Shrub, Pine Tree, Mountain Hare, Marmot, Mountain Goat, Red Fox, Golden Eagle<br><br>
+          Final 8: Alpine Grass, Mountain Shrub, Pine Tree, Mountain Goat, Mountain Hare, Golden Eagle, Marmot, Red Fox<br><br>
           <div class="scratch-pad">Eating order (by Provided):
 1. Alpine Grass (3500) — producer
 2. Mountain Shrub (2800) — producer
 3. Pine Tree (2000) — producer
-4. Mountain Goat (650) eats Grass+Shrub: 3500-800=2700 ✓
-5. Golden Eagle (550) eats Hare+Marmot: needs 700...
-   Hare: 500-550=short, + Marmot: 400-150=250 ✓
-6. Mountain Hare (500-?) eats Grass: 2700-600=2100 ✓
-7. Red Fox (450) eats Hare+Marmot: sufficient ✓
-8. Marmot (400-?) eats Grass: 2100-500=1600 ✓
+4. Mountain Goat (800) eats Grass: 3500−650=2850 ✓
+5. Mountain Hare (700) eats Grass: 2850−500=2350 ✓
+6. Golden Eagle (650) eats Hare: 700−500=200 ✓
+7. Marmot (600) eats Grass: 2350−400=1950 ✓
+8. Red Fox (550) eats Marmot: 600−450=150 ✓
 
-Check all Provided > 0 → VALID</div>
+All 8 species survive → VALID</div>
         </div>
         <div class="example">
           <div class="example-title">Step 6: Place Habitat</div>
-          Final window: ${Dim} 2000-2200${unit}, Temp 8-12°C<br>
-          <strong>Place at:</strong> ${Dim} 2100${unit}, Temp 10°C (middle values)
+          Final window: ${Dim} 1800-2200${unit}, Temp 8-12°C<br>
+          <strong>Place at:</strong> ${Dim} 2000${unit}, Temp 10°C (middle values)
         </div>
       `;
 

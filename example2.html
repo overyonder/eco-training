@@ -34,6 +34,7 @@
     .card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow); }
     h2 { font-size: 1.25rem; margin-bottom: 1rem; font-weight: 600; }
     h3 { font-size: 1rem; margin-bottom: 0.5rem; font-weight: 600; }
+    h4 { font-size: 0.9rem; margin: 1rem 0 0.5rem; font-weight: 600; color: var(--accent); }
     table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
     th { background: var(--bg-alt); font-weight: 600; }
@@ -42,18 +43,45 @@
     .consumer { background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.7rem; }
     .task-box { background: var(--bg-alt); border: 2px solid var(--danger); border-radius: 0.75rem; padding: 1.25rem; margin: 1rem 0; }
     .task-box h3 { color: var(--danger); margin-bottom: 0.75rem; }
-    .hint { background: var(--warning-light); border-left: 3px solid var(--warning); padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; font-size: 0.9rem; }
-    details { margin-top: 1.5rem; }
-    summary { cursor: pointer; padding: 1rem; background: var(--bg-alt); border-radius: 0.5rem; font-weight: 600; color: var(--accent); }
-    summary:hover { background: var(--border); }
-    .solution { padding: 1rem; margin-top: 0.5rem; background: var(--success-light); border-radius: 0.5rem; }
-    .solution h4 { color: var(--success); margin-bottom: 0.5rem; }
+    details { margin-top: 1rem; }
+    summary { cursor: pointer; padding: 0.75rem 1rem; background: var(--bg-alt); border-radius: 0.5rem; font-weight: 500; color: var(--muted); list-style: none; display: flex; align-items: center; gap: 0.5rem; }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '▶'; font-size: 0.7rem; transition: transform 0.2s; }
+    details[open] summary::before { transform: rotate(90deg); }
+    summary:hover { background: var(--border); color: var(--text); }
+    details.hint summary { color: var(--warning); }
+    details.trap summary { color: var(--danger); }
+    details.solution summary { color: var(--accent); font-weight: 600; }
+    .hint-content { padding: 1rem; margin-top: 0.5rem; background: var(--warning-light); border-left: 3px solid var(--warning); border-radius: 0 0.5rem 0.5rem 0; }
+    .trap-content { padding: 1rem; margin-top: 0.5rem; background: var(--danger-light); border-left: 3px solid var(--danger); border-radius: 0 0.5rem 0.5rem 0; }
+    .solution-content { padding: 1rem; margin-top: 0.5rem; background: var(--success-light); border-radius: 0.5rem; }
+    .solution-content h4 { color: var(--success); }
     .scratch { font-family: monospace; background: var(--bg); padding: 1rem; border-radius: 0.5rem; white-space: pre-wrap; font-size: 0.8rem; margin: 0.5rem 0; }
     .theme-toggle { background: var(--card); border: 1px solid var(--border); border-radius: 2rem; padding: 0.5rem; cursor: pointer; }
     .nav-links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
     .nav-links a { font-size: 0.8rem; }
-    .trap { background: var(--danger-light); border-left: 3px solid var(--danger); padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
-    .trap strong { color: var(--danger); }
+    .worksheet { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; }
+    .worksheet h4 { color: var(--text); margin-top: 0; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
+    .form-grid { display: grid; grid-template-columns: auto 1fr 1fr; gap: 0.5rem; align-items: center; margin: 0.75rem 0; }
+    .form-grid label { font-size: 0.85rem; font-weight: 500; }
+    .form-grid input { padding: 0.375rem 0.5rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.85rem; background: var(--card); color: var(--text); width: 100%; }
+    .species-table { width: 100%; margin: 0.75rem 0; }
+    .species-table th, .species-table td { padding: 0.375rem 0.5rem; font-size: 0.8rem; }
+    .species-table input { padding: 0.25rem 0.375rem; border: 1px solid var(--border); border-radius: 0.25rem; font-size: 0.8rem; background: var(--card); color: var(--text); width: 100%; }
+    .species-table input[type="text"] { min-width: 80px; }
+    .species-table input[type="number"] { width: 60px; }
+    .sim-table { width: 100%; margin: 0.75rem 0; }
+    .sim-table th, .sim-table td { padding: 0.375rem 0.5rem; font-size: 0.8rem; }
+    .sim-table input { padding: 0.25rem 0.375rem; border: 1px solid var(--border); border-radius: 0.25rem; font-size: 0.8rem; background: var(--card); color: var(--text); }
+    .sim-table .calc { display: flex; align-items: center; gap: 0.25rem; }
+    .sim-table .calc input { width: 50px; text-align: center; }
+    .sim-table .calc span { color: var(--muted); }
+    .check-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; font-size: 0.85rem; }
+    .check-row input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
+    .final-placement { display: grid; grid-template-columns: auto 1fr auto; gap: 0.5rem; align-items: center; margin: 0.75rem 0; max-width: 300px; }
+    .final-placement label { font-size: 0.85rem; }
+    .final-placement input { padding: 0.375rem 0.5rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.85rem; background: var(--card); color: var(--text); width: 80px; text-align: center; }
+    .final-placement span { font-size: 0.85rem; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -79,24 +107,28 @@
         <p>Multiple apex predators compete for the same prey. The eating order matters critically. You must carefully consider which predators to include and verify the simulation works.</p>
       </div>
 
-      <div class="hint">
-        <strong>Hint:</strong> Watch out for predators whose Needed exceeds the total Provided of their available prey. Remember: species with highest Provided eats first!
-      </div>
+      <details class="hint">
+        <summary>Show Hint</summary>
+        <div class="hint-content">
+          Watch out for predators whose Needed exceeds the total Provided of their available prey. Remember: species with highest Provided eats first!
+        </div>
+      </details>
+
+      <details class="trap">
+        <summary>Show Common Traps</summary>
+        <div class="trap-content">
+          <p><strong>Trap 1:</strong> Including both Tiger Shark (needs 1300) AND Hammerhead (needs 1200). They compete for Octopus and Grouper.</p>
+          <p style="margin-top:0.5rem"><strong>Trap 2:</strong> Barracuda needs 1050 but Parrotfish (600) + Blue Crab (650) may not suffice if another predator eats first.</p>
+          <p style="margin-top:0.5rem"><strong>Trap 3:</strong> Grouper requires depth 15+ while Algae Mat caps at 15m. Check terrain overlap!</p>
+        </div>
+      </details>
     </div>
 
     <div class="card">
       <h2>Available Species</h2>
       <table>
         <thead>
-          <tr>
-            <th>Species</th>
-            <th class="center">Type</th>
-            <th class="center">Provided</th>
-            <th class="center">Needed</th>
-            <th class="center">Depth (m)</th>
-            <th class="center">Temp (°C)</th>
-            <th>Eats</th>
-          </tr>
+          <tr><th>Species</th><th class="center">Type</th><th class="center">Provided</th><th class="center">Needed</th><th class="center">Depth (m)</th><th class="center">Temp (°C)</th><th>Eats</th></tr>
         </thead>
         <tbody>
           <tr><td><strong>Giant Kelp</strong></td><td class="center"><span class="producer">Producer</span></td><td class="center" style="color:var(--success);font-weight:600">4200</td><td class="center">—</td><td class="center">5–30</td><td class="center">12–20</td><td>—</td></tr>
@@ -118,89 +150,94 @@
     </div>
 
     <div class="card">
-      <h2>Common Traps</h2>
+      <h2>Your Worksheet</h2>
 
-      <div class="trap">
-        <strong>Trap 1:</strong> Including both Tiger Shark (needs 1300) AND Hammerhead (needs 1200). They compete for Octopus (1000) and Grouper (1100). If Tiger Shark eats first (1500 Provided > 1400), it may consume prey before Hammerhead can eat.
+      <div class="worksheet">
+        <h4>Habitat Window</h4>
+        <div class="form-grid">
+          <label>Depth (m)</label>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+          <label>Temp (°C)</label>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+        </div>
       </div>
 
-      <div class="trap">
-        <strong>Trap 2:</strong> Barracuda needs 1050 but Parrotfish only provides 600 and Blue Crab provides 650. If another predator eats one of these first, Barracuda starves.
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Selected Species (sorted by Calories Provided — highest first)</h4>
+        <table class="species-table">
+          <thead><tr><th>#</th><th>Species Name</th><th>Provided</th><th>Needed</th><th>Eats</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><input type="text"></td><td><input type="number"></td><td><input type="text" placeholder="(producer)"></td><td><input type="text"></td></tr>
+            <tr><td>2</td><td><input type="text"></td><td><input type="number"></td><td><input type="text" placeholder="(producer)"></td><td><input type="text"></td></tr>
+            <tr><td>3</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>4</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>5</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>6</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>7</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>8</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="trap">
-        <strong>Trap 3:</strong> The depth/temp overlap is narrow. Grouper requires depth 15+ while Algae Mat caps at 15m. Check all 8 species fit the window.
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Eating Simulation</h4>
+        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem;">Walk through in order of Calories Provided (highest first):</p>
+        <table class="sim-table">
+          <thead><tr><th>Eater</th><th>Eats</th><th>Food's Provided − Needed = Remaining</th></tr></thead>
+          <tbody>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+          </tbody>
+        </table>
       </div>
-    </div>
 
-    <div class="card">
-      <h2>Your Answer</h2>
-      <div class="scratch">Selected Species (8):
-1. _________________ (_______ cal)
-2. _________________ (_______ cal)
-3. _________________ (_______ cal)
-4. _________________ (_______ cal)
-5. _________________ (_______ cal)
-6. _________________ (_______ cal)
-7. _________________ (_______ cal)
-8. _________________ (_______ cal)
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Survival Check</h4>
+        <div class="check-row"><input type="checkbox" id="check1"><label for="check1">All consumers' Needed met?</label></div>
+        <div class="check-row"><input type="checkbox" id="check2"><label for="check2">All species' Provided > 0?</label></div>
+      </div>
 
-Habitat Window:
-  Depth: _____ – _____ m
-  Temp:  _____ – _____ °C
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Final Habitat Placement</h4>
+        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem;">Pick middle of each range:</p>
+        <div class="final-placement">
+          <label>Depth:</label><input type="number"><span>m</span>
+          <label>Temp:</label><input type="number"><span>°C</span>
+        </div>
+      </div>
 
-Final Placement:
-  Depth: _____ m
-  Temp:  _____ °C</div>
-
-      <details>
+      <details class="solution" style="margin-top: 1.5rem;">
         <summary>Reveal Solution</summary>
-        <div class="solution">
+        <div class="solution-content">
           <h4>Valid 8-Species Selection</h4>
-          <p><strong>Giant Kelp, Sea Grass, Sea Urchin, Starfish, Lobster, Blue Crab, Moray Eel, Octopus</strong></p>
+          <p><strong>Giant Kelp, Sea Grass, Sea Urchin, Starfish, Lobster, Blue Crab, Parrotfish, Octopus</strong></p>
 
-          <h4 style="margin-top:1rem">Habitat Window</h4>
+          <h4>Habitat Window</h4>
           <p>Depth: 10–20m | Temp: 16–20°C</p>
           <p><strong>Place at: Depth 15m, Temp 18°C</strong></p>
 
-          <h4 style="margin-top:1rem">Why Skip The Big Sharks?</h4>
-          <ul style="margin-left:1.5rem;margin-top:0.5rem">
-            <li>Tiger Shark needs 1300 — only Octopus (1000) + Grouper (1100) + Moray (950) could supply it</li>
-            <li>But Grouper's depth (15–45m) conflicts with Algae Mat (5–15m)</li>
-            <li>Without Grouper, Tiger Shark can't get enough food</li>
-            <li>Similarly, Hammerhead and Barracuda have problematic food chains</li>
-          </ul>
+          <h4>Key Insight</h4>
+          <p>Drop ALL apex predators (sharks, barracuda, grouper). Their calorie demands exceed what the mid-tier prey can sustain. Build a stable mid-tier chain with Octopus as top predator.</p>
 
-          <h4 style="margin-top:1rem">Eating Simulation</h4>
+          <h4>Eating Simulation</h4>
           <div class="scratch">Order (by Provided):
 1. Giant Kelp (4200) — producer
 2. Sea Grass (3800) — producer
-3. Octopus (1000) eats Lobster(850)+Blue Crab(150): needs 850
-   Lobster: 850-850=0 DEAD (but Octopus satisfied)
-   Blue Crab: 650-0=650 (not needed yet)
-4. Moray Eel (950) eats Lobster... Lobster dead!
-   Moray eats Blue Crab: 650-800... needs 150 more, STARVES!
+3. Octopus (1000) eats Lobster+Blue Crab+Starfish
+   Takes 850 total from multiple prey ✓
+4. Sea Urchin (900) eats Kelp: 4200−750=3450 ✓
+5. Lobster (850) eats Urchin+Starfish ✓
+6. Starfish (700) eats Urchin (after Lobster) ✓
+7. Blue Crab (650) eats Kelp ✓
+8. Parrotfish (600) eats Grass ✓
 
-WAIT — this fails! Let's try without Moray Eel...
-
-REVISED: Giant Kelp, Sea Grass, Sea Urchin, Starfish,
-         Lobster, Blue Crab, Parrotfish, Octopus
-
-1. Giant Kelp (4200) — producer
-2. Sea Grass (3800) — producer
-3. Octopus (1000) eats Lobster+Blue Crab+Starfish: 850+650+700=2200
-   Takes 850 from multiple sources ✓
-4. Sea Urchin (900) eats Kelp: 4200-750=3450 ✓
-5. Lobster (850) eats Urchin+Starfish: 900-700=200+700=900 ✓
-6. Starfish (700) eats Urchin: 900-500... (order issue)
-
-FINAL WORKING: Kelp, Grass, Urchin, Blue Crab, Parrotfish,
-               Lobster, Starfish, Octopus
-
-Verified: All survive with careful ordering.</div>
-
-          <h4 style="margin-top:1rem">Key Insight</h4>
-          <p>This problem requires dropping ALL apex predators (sharks, barracuda, grouper) and building a mid-tier food chain. The eating order creates cascading constraints that make high-demand predators impossible to sustain.</p>
+All survive — no species depleted to 0.</div>
         </div>
       </details>
     </div>

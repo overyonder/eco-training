@@ -42,15 +42,46 @@
     .consumer { background: var(--accent-light); color: var(--accent); padding: 0.125rem 0.5rem; border-radius: 1rem; font-size: 0.7rem; }
     .task-box { background: var(--bg-alt); border: 2px solid var(--warning); border-radius: 0.75rem; padding: 1.25rem; margin: 1rem 0; }
     .task-box h3 { color: var(--warning); margin-bottom: 0.75rem; }
-    details { margin-top: 1.5rem; }
-    summary { cursor: pointer; padding: 1rem; background: var(--bg-alt); border-radius: 0.5rem; font-weight: 600; color: var(--accent); }
-    summary:hover { background: var(--border); }
-    .solution { padding: 1rem; margin-top: 0.5rem; background: var(--success-light); border-radius: 0.5rem; }
-    .solution h4 { color: var(--success); margin-bottom: 0.5rem; }
+    h4 { font-size: 0.9rem; margin: 1rem 0 0.5rem; font-weight: 600; color: var(--accent); }
+    details { margin-top: 1rem; }
+    summary { cursor: pointer; padding: 0.75rem 1rem; background: var(--bg-alt); border-radius: 0.5rem; font-weight: 500; color: var(--muted); list-style: none; display: flex; align-items: center; gap: 0.5rem; }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '▶'; font-size: 0.7rem; transition: transform 0.2s; }
+    details[open] summary::before { transform: rotate(90deg); }
+    summary:hover { background: var(--border); color: var(--text); }
+    details.hint summary { color: var(--warning); }
+    details.solution summary { color: var(--accent); font-weight: 600; }
+    .hint-content { padding: 1rem; margin-top: 0.5rem; background: var(--warning-light); border-left: 3px solid var(--warning); border-radius: 0 0.5rem 0.5rem 0; }
+    .solution-content { padding: 1rem; margin-top: 0.5rem; background: var(--success-light); border-radius: 0.5rem; }
+    .solution-content h4 { color: var(--success); }
     .scratch { font-family: monospace; background: var(--bg); padding: 1rem; border-radius: 0.5rem; white-space: pre-wrap; font-size: 0.8rem; margin: 0.5rem 0; }
     .theme-toggle { background: var(--card); border: 1px solid var(--border); border-radius: 2rem; padding: 0.5rem; cursor: pointer; }
     .nav-links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
     .nav-links a { font-size: 0.8rem; }
+
+    /* Form styles */
+    .worksheet { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; }
+    .worksheet h4 { color: var(--text); margin-top: 0; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
+    .form-grid { display: grid; grid-template-columns: auto 1fr 1fr; gap: 0.5rem; align-items: center; margin: 0.75rem 0; }
+    .form-grid label { font-size: 0.85rem; font-weight: 500; }
+    .form-grid input { padding: 0.375rem 0.5rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.85rem; background: var(--card); color: var(--text); width: 100%; }
+    .species-table { width: 100%; margin: 0.75rem 0; }
+    .species-table th, .species-table td { padding: 0.375rem 0.5rem; font-size: 0.8rem; }
+    .species-table input { padding: 0.25rem 0.375rem; border: 1px solid var(--border); border-radius: 0.25rem; font-size: 0.8rem; background: var(--card); color: var(--text); width: 100%; }
+    .species-table input[type="text"] { min-width: 80px; }
+    .species-table input[type="number"] { width: 60px; }
+    .sim-table { width: 100%; margin: 0.75rem 0; }
+    .sim-table th, .sim-table td { padding: 0.375rem 0.5rem; font-size: 0.8rem; }
+    .sim-table input { padding: 0.25rem 0.375rem; border: 1px solid var(--border); border-radius: 0.25rem; font-size: 0.8rem; background: var(--card); color: var(--text); }
+    .sim-table .calc { display: flex; align-items: center; gap: 0.25rem; }
+    .sim-table .calc input { width: 50px; text-align: center; }
+    .sim-table .calc span { color: var(--muted); }
+    .check-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; font-size: 0.85rem; }
+    .check-row input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
+    .final-placement { display: grid; grid-template-columns: auto 1fr auto; gap: 0.5rem; align-items: center; margin: 0.75rem 0; max-width: 300px; }
+    .final-placement label { font-size: 0.85rem; }
+    .final-placement input { padding: 0.375rem 0.5rem; border: 1px solid var(--border); border-radius: 0.375rem; font-size: 0.85rem; background: var(--card); color: var(--text); width: 80px; text-align: center; }
+    .final-placement span { font-size: 0.85rem; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -80,6 +111,13 @@
           <li>Determine the habitat coordinates (middle of valid range)</li>
         </ol>
       </div>
+
+      <details class="hint">
+        <summary>Show Hint</summary>
+        <div class="hint-content">
+          This "easy" problem has a trick: apex predators can deplete prey. The safest solution avoids Red Fox, Golden Eagle, and Snow Leopard entirely. With 3 producers totaling 8400 calories, 5 herbivores can easily feed without predation issues.
+        </div>
+      </details>
     </div>
 
     <div class="card">
@@ -113,87 +151,102 @@
     </div>
 
     <div class="card">
-      <h2>Your Answer</h2>
-      <p>Work through this problem using the heuristic method, then check your answer below.</p>
+      <h2>Your Worksheet</h2>
 
-      <div class="scratch">Selected Species (8):
-1. _________________ (_______ cal)
-2. _________________ (_______ cal)
-3. _________________ (_______ cal)
-4. _________________ (_______ cal)
-5. _________________ (_______ cal)
-6. _________________ (_______ cal)
-7. _________________ (_______ cal)
-8. _________________ (_______ cal)
+      <div class="worksheet">
+        <h4>Habitat Window</h4>
+        <div class="form-grid">
+          <label>Elevation (m)</label>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+          <label>Temp (°C)</label>
+          <input type="number" placeholder="Min">
+          <input type="number" placeholder="Max">
+        </div>
+      </div>
 
-Habitat Window:
-  Elevation: _____ – _____ m
-  Temp:      _____ – _____ °C
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Selected Species (sorted by Calories Provided — highest first)</h4>
+        <table class="species-table">
+          <thead>
+            <tr><th>#</th><th>Species Name</th><th>Provided</th><th>Needed</th><th>Eats</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td><input type="text"></td><td><input type="number"></td><td><input type="text" placeholder="(producer)"></td><td><input type="text"></td></tr>
+            <tr><td>2</td><td><input type="text"></td><td><input type="number"></td><td><input type="text" placeholder="(producer)"></td><td><input type="text"></td></tr>
+            <tr><td>3</td><td><input type="text"></td><td><input type="number"></td><td><input type="text" placeholder="(producer)"></td><td><input type="text"></td></tr>
+            <tr><td>4</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>5</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>6</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>7</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+            <tr><td>8</td><td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td></tr>
+          </tbody>
+        </table>
+      </div>
 
-Final Placement:
-  Elevation: _____ m
-  Temp:      _____ °C</div>
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Eating Simulation</h4>
+        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem;">Walk through in order of Calories Provided (highest first):</p>
+        <table class="sim-table">
+          <thead>
+            <tr><th>Eater</th><th>Eats</th><th>Food's Provided − Needed = Remaining</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+            <tr><td><input type="text" style="width:100px"></td><td><input type="text" style="width:100px"></td><td><div class="calc"><input type="number"> <span>−</span> <input type="number"> <span>=</span> <input type="number"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
 
-      <details>
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Survival Check</h4>
+        <div class="check-row"><input type="checkbox" id="check1"><label for="check1">All consumers' Needed met?</label></div>
+        <div class="check-row"><input type="checkbox" id="check2"><label for="check2">All species' Provided > 0?</label></div>
+      </div>
+
+      <div class="worksheet" style="margin-top: 1rem;">
+        <h4>Final Habitat Placement</h4>
+        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem;">Pick middle of each range:</p>
+        <div class="final-placement">
+          <label>Elevation:</label><input type="number"><span>m</span>
+          <label>Temp:</label><input type="number"><span>°C</span>
+        </div>
+      </div>
+
+      <details class="solution" style="margin-top: 1.5rem;">
         <summary>Reveal Solution</summary>
-        <div class="solution">
+        <div class="solution-content">
           <h4>Valid 8-Species Selection</h4>
-          <p><strong>Alpine Grass, Wild Flowers, Berry Bush, Grasshopper, Mountain Vole, Marmot, Mountain Hare, Red Fox</strong></p>
+          <p><strong>Alpine Grass, Wild Flowers, Berry Bush, Grasshopper, Mountain Vole, Pika, Marmot, Mountain Hare</strong></p>
 
-          <h4 style="margin-top:1rem">Habitat Window</h4>
+          <h4>Habitat Window</h4>
           <p>Elevation: 1800–2400m | Temp: 8–14°C</p>
           <p><strong>Place at: Elevation 2100m, Temp 11°C</strong></p>
 
-          <h4 style="margin-top:1rem">Eating Simulation</h4>
+          <h4>Eating Simulation</h4>
           <div class="scratch">Order (by Provided):
 1. Alpine Grass (3200) — producer
 2. Wild Flowers (2800) — producer
 3. Berry Bush (2400) — producer
-4. Red Fox (800) eats Vole+Grasshopper: 550+600=1150, needs 650
-   Vole: 550-550=0 (eaten completely, but Red Fox fed)
-   Grasshopper: 600-100=500 ✓
-5. Marmot (700) eats Flowers+Bush: 2800-500=2300 ✓
-6. Mountain Hare (650) eats Grass+Flowers: 3200-450=2750 ✓
-7. Grasshopper (500 remaining) eats Grass: 2750-400=2350 ✓
-8. Mountain Vole — eaten by Red Fox (Provided=0, dies)
+4. Marmot (700) eats Flowers+Bush: 2800−500=2300 ✓
+5. Mountain Hare (650) eats Grass+Flowers: 3200−450=2750 ✓
+6. Grasshopper (600) eats Grass+Flowers: 2750−400=2350 ✓
+7. Mountain Vole (550) eats Grass+Bush: 2350−350=2000 ✓
+8. Pika (500) eats Grass+Flowers: 2000−300=1700 ✓
 
-WAIT — Vole dies! Need different selection...
+All 8 species survive — no predation issues.</div>
 
-REVISED: Skip Vole, add Pika instead
-Alpine Grass, Wild Flowers, Grasshopper, Pika, Marmot,
-Mountain Hare, Red Fox, Golden Eagle
-
-Window: 2000–2400m, 6–14°C ✓
-
-1. Grass (3200) — producer
-2. Flowers (2800) — producer
-3. Golden Eagle (900) eats Marmot+Hare+Pika: 700+650+500=1850
-   Takes 750 total ✓ (prey diminished but survive)
-4. Red Fox (800) eats Pika+Grasshopper: after Eagle ate some...
-
-This gets complex. Simpler solution:
-
-FINAL: Grass, Flowers, Berry Bush, Grasshopper, Marmot,
-       Hare, Pika, Golden Eagle
-
-1. Grass (3200), Flowers (2800), Bush (2400) — producers
-2. Golden Eagle (900) eats Marmot(700)+Hare(650)+Pika(500)
-   Takes 750 from Marmot: 700-700=0... Marmot dies!
-   Takes 50 from Hare: 650-50=600 ✓
-3. Marmot already eaten, but was prey not eater
-4. Hare (600) eats Grass: 3200-450=2750 ✓
-5. Pika (500) eats Grass: 2750-300=2450 ✓
-6. Grasshopper (600) eats Grass: 2450-400=2050 ✓
-
-Marmot dies (Provided→0), ecosystem FAILS.
-
-WORKING SOLUTION: Drop apex predators entirely
-Grass, Flowers, Bush, Grasshopper, Vole, Pika, Marmot, Hare
-
-All herbivores eating producers, no predation deaths.</div>
-
-          <h4 style="margin-top:1rem">Key Insight</h4>
-          <p>In this "easy" problem, the safest solution avoids predators like Red Fox and Golden Eagle entirely. With 3 producers totaling 8400 calories, 5 herbivores can easily feed without depleting each other.</p>
+          <h4>Why This Works</h4>
+          <ul style="margin-left:1.5rem;margin-top:0.5rem">
+            <li>3 producers provide 8400 total calories — more than enough</li>
+            <li>No apex predators (Red Fox, Golden Eagle, Snow Leopard)</li>
+            <li>All 5 herbivores eat from abundant producers</li>
+            <li>No species gets depleted to 0</li>
+          </ul>
         </div>
       </details>
     </div>
